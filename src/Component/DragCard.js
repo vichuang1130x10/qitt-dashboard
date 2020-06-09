@@ -1,6 +1,7 @@
 import React from "react";
 import { Card } from "react-bootstrap";
-import Dropzone from "./Dragzone";
+// import Dropzone from "./Dragzone";
+import DropzoneForFailure from "./DropzoneForFailure";
 
 export default function DragCard({ title, fileType, callback, setFlag }) {
   return (
@@ -8,7 +9,11 @@ export default function DragCard({ title, fileType, callback, setFlag }) {
       <Card.Body>
         <Card.Title className="font-weight-bold">{title}</Card.Title>
 
-        <Dropzone fileType={fileType} callback={callback} setFlag={setFlag} />
+        <DropzoneForFailure
+          fileType={fileType}
+          callback={callback}
+          setFlag={setFlag}
+        />
       </Card.Body>
     </Card>
   );

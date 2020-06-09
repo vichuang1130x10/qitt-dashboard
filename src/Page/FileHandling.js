@@ -3,25 +3,40 @@ import { Container, Row, Col, Button } from "react-bootstrap";
 import { navigate } from "@reach/router";
 import DragCard from "../Component/DragCard";
 import { FaSearch } from "react-icons/fa";
+import { mappingErrorListAndRepairList } from "../Utils/utilities";
 
 export default function FileHandling() {
-  const [nud, setNud] = useState({});
-  const [bom, setBom] = useState({});
-  const [nudSet, setNudFlag] = useState(false);
-  const [bomSet, setBomFlag] = useState(false);
+  const [yieldRate, setYieldRate] = useState({});
+  const [errorList, setErrorList] = useState({});
+  const [repairList, setRepairList] = useState({});
+  const [yieldRateFlag, setYieldRateFlag] = useState(false);
+  const [errorListFlag, setErrorListFlag] = useState(false);
+  const [repairListFlag, setRepairListFlag] = useState(false);
 
-  const receivedNud = (obj) => {
-    setNud(obj);
+  const receivedYieldRate = (obj) => {
+    setYieldRate(obj);
     //setNudFlag(true);
   };
 
-  const receivedBom = (obj) => {
-    setBom(obj);
+  const receivedErrorList = (obj) => {
+    setErrorList(obj);
     //setBomFlag(true);
   };
 
+  const receivedRepairList = (obj) => setRepairList(obj);
+
   const transferData = (e) => {
-    navigate(`/result`, { state: { NUD: nud, BOM: bom } });
+    //
+    //  navigate(`/result`, { state: { YieldRate: yieldRate, ErrorAnalysis: n } });
+
+    mappingErrorListAndRepairList(errorList, repairList);
+    const udpatedErrorList = errorList.ErrorList.map((ele) => {
+      if (ele["Reason"] === null || ele["Reason"] === undefined) {
+        ele["Reason"] = "Under investigation";
+      }
+      return ele;
+    });
+    console.log(udpatedErrorList);
   };
 
   return (
@@ -33,25 +48,33 @@ export default function FileHandling() {
         <Row>
           <Col>
             <DragCard
-              title="New Component List"
-              fileType="NUD"
-              callback={(obj) => receivedNud(obj)}
-              setFlag={(bool) => setNudFlag(bool)}
+              title="Yield Rate"
+              fileType="YieldRate"
+              callback={(obj) => receivedYieldRate(obj)}
+              setFlag={(bool) => setYieldRateFlag(bool)}
             />
           </Col>
           <Col>
             <DragCard
-              title="BOM File"
-              fileType="BOM"
-              callback={(obj) => receivedBom(obj)}
-              setFlag={(bool) => setBomFlag(bool)}
+              title="Error List"
+              fileType="ErrorList"
+              callback={(obj) => receivedErrorList(obj)}
+              setFlag={(bool) => setErrorListFlag(bool)}
+            />
+          </Col>
+          <Col>
+            <DragCard
+              title="Repair List"
+              fileType="RepairList"
+              callback={(obj) => receivedRepairList(obj)}
+              setFlag={(bool) => setRepairListFlag(bool)}
             />
           </Col>
         </Row>
         <div style={{ height: "50px" }} />
         <Row className="d-flex justify-content-center">
           <Button
-            disabled={!nudSet || !bomSet}
+            disabled={!yieldRateFlag || !errorListFlag || !repairListFlag}
             style={{ width: "50%" }}
             onClick={transferData}
           >
