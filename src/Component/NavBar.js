@@ -7,7 +7,7 @@ export default function NavBbar() {
     <Nav className="navbar bg-dark navbar-dark fixed-top">
       <Container>
         <Link to="/" className="navbar-brand">
-          SMC-ME
+          SUPERMICRO ME
         </Link>
       </Container>
     </Nav>

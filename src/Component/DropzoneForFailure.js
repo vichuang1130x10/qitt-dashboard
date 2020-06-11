@@ -31,8 +31,10 @@ export default function Dropzone({ callback, fileType, setFlag }) {
                 setFlag(false);
               } else {
                 const updatedJson = { YieldRate: retJson[key] };
+
                 const n = parseForYieldRate(updatedJson);
                 console.log(n);
+
                 callback(n);
                 setFlag(true);
               }
@@ -78,6 +80,7 @@ export default function Dropzone({ callback, fileType, setFlag }) {
         // reader.readAsArrayBuffer(file)
         reader.readAsBinaryString(file);
       });
+
       setFilename(acceptedFiles[0].name);
     },
     [callback, fileType, setFlag]

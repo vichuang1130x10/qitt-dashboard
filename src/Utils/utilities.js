@@ -19,6 +19,62 @@ export function toJson(workbook) {
   return result;
 }
 
+export function parsingErrorList(errorList) {
+  let n = {};
+  errorList.forEach((obj) => {
+    if (n[obj.Model] === undefined || n[obj.Model] === null) {
+      n[obj.Model] = {};
+      n[obj.Model]["SMT1"] = { ErorrDescriptions: [] };
+      n[obj.Model]["SMT2"] = { ErorrDescriptions: [] };
+      n[obj.Model]["ASM"] = { ErorrDescriptions: [] };
+      n[obj.Model]["FCT"] = { ErorrDescriptions: [] };
+      n[obj.Model]["DAOI"] = { ErorrDescriptions: [] };
+      n[obj.Model]["CPLD"] = { ErorrDescriptions: [] };
+      n[obj.Model]["VOL"] = { ErorrDescriptions: [] };
+      n[obj.Model]["CQC"] = { ErorrDescriptions: [] };
+      n[obj.Model]["ICT"] = { ErorrDescriptions: [] };
+
+      if (
+        obj.Type === "SMT1" ||
+        obj.Type === "SMT2" ||
+        obj.Type === "ASM" ||
+        obj.Type === "FCT" ||
+        obj.Type === "DAOI" ||
+        obj.Type === "CPLD" ||
+        obj.Type === "VOL" ||
+        obj.Type === "CQC" ||
+        obj.Type === "ICT"
+      ) {
+        n[obj.Model][obj.Type].ErorrDescriptions = [
+          {
+            description: obj["Error_Description"],
+            reasons: [{ reason: obj.Reason, item: obj.item }],
+          },
+        ];
+      }
+    } else {
+      if (
+        obj.Type === "SMT1" ||
+        obj.Type === "SMT2" ||
+        obj.Type === "ASM" ||
+        obj.Type === "FCT" ||
+        obj.Type === "DAOI" ||
+        obj.Type === "CPLD" ||
+        obj.Type === "VOL" ||
+        obj.Type === "CQC" ||
+        obj.Type === "ICT"
+      ) {
+        n[obj.Model][obj.Type].ErorrDescriptions.push({
+          description: obj["Error_Description"],
+          reasons: [{ reason: obj.Reason, item: obj.item }],
+        });
+      }
+    }
+  });
+
+  return n;
+}
+
 export function parseForYieldRate(updatedJson) {
   let n = {};
 
@@ -115,10 +171,6 @@ export function generateFTY(obj) {
       FTY: fty,
     };
   });
-  // return obj.map((model) => {
-  //   const fe = { Pass: model.SMT1.Pass + model.SMT2.Pass };
-  //   return { ...model, FE: fe };
-  // });
   return obj;
 }
 
@@ -136,26 +188,6 @@ export function mappingErrorListAndRepairList(objA, objB) {
       Object.assign(errorListElement, repairElement);
     }
   });
-
-  // const result = [];
-
-  // objA.ErrorList.forEach((a) => {
-  //   let obj = {};
-  //   objB.RepairList.forEach((b) => {
-  //     if (
-  //       b.CM_SN === a.CM_SN &&
-  //       b.Error_Description === a.Error_Description &&
-  //       b.Type === a.Type
-  //     ) {
-  //       obj = { ...objA.ErrorList, Reason: b.Reason };
-  //     } else {
-  //       obj = { ...objA.ErrorList, Reason: "Under Investigation" };
-  //     }
-  //   });
-  //   result.push(obj);
-  // });
-
-  // return result;
 }
 
 export function parseObject(retJson) {

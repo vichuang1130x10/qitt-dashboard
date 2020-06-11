@@ -42,3 +42,16 @@ body {
   transition: border 0.24s ease-in-out;
 
 }
+
+.centered {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+
+}
+
+.disableIndicator {
+  display: none;
+}

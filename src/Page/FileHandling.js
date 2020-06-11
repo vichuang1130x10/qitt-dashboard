@@ -2,8 +2,12 @@ import React, { useState } from "react";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import { navigate } from "@reach/router";
 import DragCard from "../Component/DragCard";
-import { FaSearch } from "react-icons/fa";
-import { mappingErrorListAndRepairList } from "../Utils/utilities";
+import { FaHourglass } from "react-icons/fa";
+import {
+  mappingErrorListAndRepairList,
+  parsingErrorList,
+} from "../Utils/utilities";
+import Indicator from "../Component/Indicator";
 
 export default function FileHandling() {
   const [yieldRate, setYieldRate] = useState({});
@@ -36,15 +40,19 @@ export default function FileHandling() {
       }
       return ele;
     });
-    console.log(udpatedErrorList);
+    const parsedErrorList = parsingErrorList(udpatedErrorList);
+    navigate(`/result`, {
+      state: { YieldRate: yieldRate, ErrorAnalysis: parsedErrorList },
+    });
   };
 
   return (
     <div>
       <Container>
-        <h1 className="text-center font-weight-bold m-auot mb-5">
-          Pick The Files For Comparing
-        </h1>
+        <h1 className="text-left">Quality Improvement Tracking Tool For USI</h1>
+        <h6 className="text-left m-auot mt-5">
+          Pick The Files For Generating The Quality Data
+        </h6>
         <Row>
           <Col>
             <DragCard
@@ -79,9 +87,9 @@ export default function FileHandling() {
             onClick={transferData}
           >
             <span className="m-1">
-              <FaSearch color="white" />
+              <FaHourglass color="white" />
             </span>{" "}
-            Let's Compare
+            Generate Report
           </Button>
         </Row>
       </Container>

@@ -7,16 +7,16 @@ import Landing from "./Page/Landing";
 import FileHandling from "./Page/FileHandling";
 import ResultPresent from "./Page/ResultPresent";
 import { Container, Row } from "react-bootstrap";
+import ReactLoading from "react-loading";
 
 function App() {
   return (
     <>
       <Navbar />
       <Container className="p-5 m-5">
-        <Row className="d-flex  justify-content-center mx-auto text-center">
+        <Row className="d-flex  justify-content-center mx-auto text-center parent">
           <Router>
-            <Landing path="/" />
-            <FileHandling path="/file-handle" />
+            <FileHandling path="/" />
             <ResultPresent path="/result" />
           </Router>
         </Row>

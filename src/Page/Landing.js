@@ -5,11 +5,11 @@ import { navigate } from "@reach/router";
 export default function Landing() {
   return (
     <Jumbotron className="text-center mx-auto">
-      <h1 className="display-4">Welcome to File Compare app</h1>
-      <p className="lead">
+      <h1 className="display-4">USI Quality Improvement Tracking Table</h1>
+      {/* <p className="lead">
         This is a simple web-app to compare 2 excel files which are ME new
         component list and BOM.
-      </p>
+      </p> */}
       <hr />
       <p>
         <Button variant="primary" onClick={(e) => navigate(`/file-handle`)}>
