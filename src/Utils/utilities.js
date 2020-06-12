@@ -1,10 +1,12 @@
 import XLSX from "xlsx";
 
+// read excel file
 export function readxlsx(inputData) {
   var workbook = XLSX.read(inputData, { type: "binary", cellDates: true });
   return toJson(workbook);
 }
 
+// parsing excel obj to json
 export function toJson(workbook) {
   let result = {};
   workbook.SheetNames.forEach((sheetName) => {
@@ -19,6 +21,7 @@ export function toJson(workbook) {
   return result;
 }
 
+// parsing errorlist json to specfic format for each station failure symptom
 export function parsingErrorList(errorList) {
   let n = {};
   errorList.forEach((obj) => {
@@ -75,10 +78,23 @@ export function parsingErrorList(errorList) {
   return n;
 }
 
+// parsing yieldRate json to specfic format for each station failure symptom
 export function parseForYieldRate(updatedJson) {
-  let n = {};
+  let n = { startDate: null, endDate: null };
 
   updatedJson.YieldRate.forEach((obj) => {
+    if (n.startDate === null) {
+      n.startDate = obj.Date;
+    } else if (obj.Date < n.startDate) {
+      n.startDate = obj.Date;
+    }
+
+    if (n.endDate === null) {
+      n.endDate = obj.Date;
+    } else if (obj.Date > n.endDate) {
+      n.endDate = obj.Date;
+    }
+
     if (n[obj.Model] === undefined || n[obj.Model] === null) {
       n[obj.Model] = {};
       n[obj.Model]["RowData"] = [obj];
@@ -131,11 +147,29 @@ export function parseForYieldRate(updatedJson) {
     }
   });
 
-  return generateFTY(n);
+  return transformToArray(generateFTY(n));
 }
 
-export function generateFTY(obj) {
-  const keys = Object.keys(obj);
+// transform yieldRate object into array for result page easy to render
+function transformToArray(obj) {
+  const o = { startDate: obj.startDate, endDate: obj.endDate, models: [] };
+  const keys = Object.keys(obj).filter(
+    (item) => item !== "startDate" && item !== "endDate"
+  );
+  keys.forEach((model) => {
+    const newObject = { model, ...obj[model] };
+    o.models.push(newObject);
+  });
+
+  return o;
+}
+
+// generate FTY for yieldRate each model and stattion
+function generateFTY(obj) {
+  const keys = Object.keys(obj).filter(
+    (item) => item !== "startDate" && item !== "endDate"
+  );
+
   keys.forEach((key) => {
     let model = obj[key];
     const fePass = Math.max(model.SMT1.Pass || 0, model.SMT2.Pass || 0);
@@ -174,6 +208,7 @@ export function generateFTY(obj) {
   return obj;
 }
 
+// Mapping error list and repair list
 export function mappingErrorListAndRepairList(objA, objB) {
   objB.RepairList.forEach((repairElement) => {
     let errorListElement = objA.ErrorList.find((errorListElement) => {
@@ -188,57 +223,4 @@ export function mappingErrorListAndRepairList(objA, objB) {
       Object.assign(errorListElement, repairElement);
     }
   });
-}
-
-export function parseObject(retJson) {
-  let bomObj = [];
-  retJson.BOM.forEach((row) => {
-    if (row["Bill of Materials (BOM) Form"] >= 0) {
-      const obj = {
-        item: row["Bill of Materials (BOM) Form"],
-        qty: row.__EMPTY,
-        smcPn: row.__EMPTY_1,
-        type:
-          row.__EMPTY_1 === null ||
-          row.__EMPTY_1 === undefined ||
-          typeof row.__EMPTY_1 !== "string" ||
-          row.__EMPTY_1 instanceof String
-            ? ""
-            : row.__EMPTY_1.split("-")[0],
-        mfg: row.__EMPTY_2,
-        mfgPn: row.__EMPTY_3,
-        description: row.__EMPTY_4,
-        refence: row.__EMPTY_5,
-        rowNum: row.__rowNum__,
-      };
-      bomObj.push(obj);
-    }
-  });
-
-  return bomObj;
-}
-
-const keywords = [
-  "BGA",
-  "SOCKET",
-  "QFN",
-  "CRYSTAL",
-  "QFP",
-  "LED",
-  "CONNECTOR",
-  "SFP",
-  "LGA",
-  "PRESS",
-  "HEATSINK",
-  "SCREW",
-];
-
-export function recommendItem(bom) {
-  return bom
-    .filter(
-      (item) => item.description !== undefined && item.description !== null
-    )
-    .filter((item) =>
-      keywords.some((keyword) => item.description.includes(keyword))
-    );
 }

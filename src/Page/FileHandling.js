@@ -7,7 +7,6 @@ import {
   mappingErrorListAndRepairList,
   parsingErrorList,
 } from "../Utils/utilities";
-import Indicator from "../Component/Indicator";
 
 export default function FileHandling() {
   const [yieldRate, setYieldRate] = useState({});

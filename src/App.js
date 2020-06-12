@@ -3,11 +3,9 @@ import { Router } from "@reach/router";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.scss";
 import Navbar from "./Component/NavBar";
-import Landing from "./Page/Landing";
 import FileHandling from "./Page/FileHandling";
 import ResultPresent from "./Page/ResultPresent";
 import { Container, Row } from "react-bootstrap";
-import ReactLoading from "react-loading";
 
 function App() {
   return (
