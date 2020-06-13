@@ -9,6 +9,10 @@ export default function ResultPresent(props) {
 
   const [yieldRate, setYieldRate] = useState([]);
   const [errorAnalysis, setErrorAnalysis] = useState({});
+  const [sortModelNameFlag, setSortModelNameFlag] = useState(false);
+  const [sortFEFlag, setSortFEFlag] = useState(false);
+  const [sortBEFlag, setSortBEFlag] = useState(false);
+  const [sortFTYFlag, setSortFTYFlag] = useState(false);
 
   const YieldRate = props.location.state.YieldRate;
   useEffect(() => {
@@ -29,12 +33,87 @@ export default function ResultPresent(props) {
     setYieldRate(searchList);
   };
 
+  const sortByModelName = () => {
+    let sortList = [];
+    if (sortModelNameFlag) {
+      sortList = yieldRate.sort((a, b) => {
+        if (a.model > b.model) {
+          return 1;
+        } else {
+          return -1;
+        }
+        return 0;
+      });
+    } else {
+      sortList = yieldRate.sort((a, b) => {
+        if (a.model < b.model) {
+          return 1;
+        } else {
+          return -1;
+        }
+        return 0;
+      });
+    }
+    setYieldRate(sortList);
+    const reverse = !sortModelNameFlag;
+    setSortModelNameFlag(reverse);
+  };
+
+  const sortByFE = () => {
+    let sortList = [];
+    if (sortFEFlag) {
+      sortList = yieldRate.sort((a, b) => {
+        return a.FE.Yield - b.FE.Yield;
+      });
+    } else {
+      sortList = yieldRate.sort((a, b) => {
+        return b.FE.Yield - a.FE.Yield;
+      });
+    }
+    setYieldRate(sortList);
+    setSortFEFlag(!sortFEFlag);
+  };
+
+  const sortByBE = () => {
+    let sortList = [];
+    if (sortBEFlag) {
+      sortList = yieldRate.sort((a, b) => {
+        return a.BE.Yield - b.BE.Yield;
+      });
+    } else {
+      sortList = yieldRate.sort((a, b) => {
+        return b.BE.Yield - a.BE.Yield;
+      });
+    }
+    setYieldRate(sortList);
+    setSortBEFlag(!sortBEFlag);
+  };
+
+  const sortByFTY = () => {
+    let sortList = [];
+    if (sortFTYFlag) {
+      sortList = yieldRate.sort((a, b) => {
+        return a.FTY - b.FTY;
+      });
+    } else {
+      sortList = yieldRate.sort((a, b) => {
+        return b.FTY - a.FTY;
+      });
+    }
+    setYieldRate(sortList);
+    setSortFTYFlag(!sortFTYFlag);
+  };
+
   // console.log(ErrorAnalysis);
   // console.log(YieldRate);
 
   return YieldRate.startDate ? (
     <>
       <HeaderWithSearchBar
+        sortModelName={() => sortByModelName()}
+        sortFE={() => sortByFE()}
+        sortBE={() => sortByBE()}
+        sortFTY={() => sortByFTY()}
         searchBarOnchanged={(v) => keywordSearch(v)}
         date={`${outputDate(YieldRate.startDate)} ~ ${outputDate(
           YieldRate.endDate

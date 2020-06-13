@@ -84,24 +84,46 @@ export default function HeaderWithSearchBar(props) {
         />
         <div className="progress-control">
           <div className="progress-control-div">
-            Model <img src={direction} alt="direction" width="15px" />
+            Model{" "}
+            <img
+              src={direction}
+              alt="direction"
+              width="15px"
+              onClick={() => props.sortModelName()}
+            />
           </div>
           <div className="progress-control-outer">
             <div className="progress-control-div">
               F/E Yield
-              <img src={direction} alt="direction" width="15px" />
+              <img
+                src={direction}
+                alt="direction"
+                width="15px"
+                onClick={() => props.sortFE()}
+              />
             </div>
             <p>(SMT1 + SMT2)</p>
           </div>
           <div className="progress-control-outer">
             <div className="progress-control-div">
               B/E Yield
-              <img src={direction} alt="direction" width="15px" />
+              <img
+                src={direction}
+                alt="direction"
+                width="15px"
+                onClick={() => props.sortBE()}
+              />
             </div>
             <p>(ASM + CPLD + VCL + FCT + DAOI)</p>
           </div>
           <div className="progress-control-div">
-            FTY <img src={direction} alt="direction" width="15px" />
+            FTY{" "}
+            <img
+              src={direction}
+              alt="direction"
+              width="15px"
+              onClick={() => props.sortFTY()}
+            />
           </div>
         </div>
       </NavHeader>

@@ -20,20 +20,15 @@ export default function FileHandling() {
 
   const receivedYieldRate = (obj) => {
     setYieldRate(obj);
-    //setNudFlag(true);
   };
 
   const receivedErrorList = (obj) => {
     setErrorList(obj);
-    //setBomFlag(true);
   };
 
   const receivedRepairList = (obj) => setRepairList(obj);
 
   const transferData = (e) => {
-    //
-    //  navigate(`/result`, { state: { YieldRate: yieldRate, ErrorAnalysis: n } });
-
     mappingErrorListAndRepairList(errorList, repairList);
     const udpatedErrorList = errorList.ErrorList.map((ele) => {
       if (ele["Reason"] === null || ele["Reason"] === undefined) {

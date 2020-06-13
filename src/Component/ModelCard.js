@@ -28,13 +28,19 @@ export default function ModelCard({ model, FE, BE, FTY }) {
         <div>{`${separateString(model)[0]}`}</div>
         <div>{`(${separateString(model)[1]}`}</div>
       </ModelBlock>
-      <ModelBlock>{`${FE.Yield || "NA"} ${FE.Yield ? "%" : ""} (${FE.Pass}/ ${
+      <ModelBlock
+        style={{ color: FE.Yield < 97.5 ? "#d00213" : "#003aff" }}
+      >{`${FE.Yield || "NA"} ${FE.Yield ? "%" : ""} (${FE.Pass}/ ${
         FE.Pass + FE.Fail
       }) `}</ModelBlock>
-      <ModelBlock>{`${BE.Yield || "NA"} ${BE.Yield ? "%" : ""}  (${BE.Pass}/ ${
+      <ModelBlock style={{ color: BE.Yield < 92 ? "#d00213" : "#003aff" }}>{`${
+        BE.Yield || "NA"
+      } ${BE.Yield ? "%" : ""}  (${BE.Pass}/ ${
         BE.Pass + BE.Fail
       })`}</ModelBlock>
-      <ModelBlock>{`${FTY || "NA"} ${FTY ? "%" : ""}`}</ModelBlock>
+      <ModelBlock style={{ color: FTY < 90 ? "#d00213" : "#003aff" }}>{`${
+        FTY || "NA"
+      } ${FTY ? "%" : ""}`}</ModelBlock>
     </ModelContainer>
   );
 }
