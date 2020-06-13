@@ -1,5 +1,5 @@
 import React from "react";
-
+import HeaderWithSearchBar from "../Component/HeaderWithSearchBar";
 import { Container, Row, Badge } from "react-bootstrap";
 import { outputDate } from "../Utils/HelperFunction";
 
@@ -38,42 +38,13 @@ export default function ResultPresent(props) {
   // };
 
   return (
-    <Container>
-      <h1 className="font-weigth-bold text-center mb-4">Compare Result</h1>
-      <h4>{`Date Range : ${outputDate(YieldRate.startDate)} ~ ${outputDate(
-        YieldRate.endDate
-      )}`}</h4>
-      {console.log(YieldRate.models)}
-
-      {/* <Row className="mb-2">
-        <h4>Already Exist in New Component List</h4>
-        <ComponentTable data={results} />
-      </Row>
-      <Row className="mb-2">
-        <h4>Recommend to review</h4>
-        <ComponentTable data={recommendItem(bom)} exsitedBOM={results} checkExist={true}/>
-      </Row>
-
-      <Row className="mb-2">
-        <h4 className="mb-4">BOM Review By Component Type:</h4>
-        <Container>
-          {typeArray.map((item, i) => (
-            <Badge
-              key={i}
-              pill
-              variant="primary"
-              onClick={() => badgeOnClick(item)}
-              className="mr-2 p-2"
-            >
-              {item}
-            </Badge>
-          ))}
-        </Container>
-      </Row>
-
-      <Row className="mb-2">
-        <ComponentTable data={originalBom} />
-      </Row>*/}
-    </Container>
+    <>
+      <HeaderWithSearchBar
+        date={`${outputDate(YieldRate.startDate)} ~ ${outputDate(
+          YieldRate.endDate
+        )}`}
+      />
+      <Container></Container>
+    </>
   );
 }

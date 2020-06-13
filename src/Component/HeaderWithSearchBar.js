@@ -26,6 +26,10 @@ const NavSubTitle = styled.div`
   padding: 0 64px;
 `;
 
+const DataRange = styled.div`
+  padding: 20px 64px;
+`;
+
 const Input = styled.input`
   font-size: 16px;
   border: solid 1px #dbdbdb;
@@ -40,7 +44,7 @@ const Input = styled.input`
   text-align: center;
 
   width: 20%;
-  margin: 40px 40px;
+  margin: 0px 128px;
 
   &:active,
   &:focus {
@@ -48,7 +52,7 @@ const Input = styled.input`
   }
 `;
 
-export default function Header(props) {
+export default function HeaderWithSearchBar(props) {
   return (
     <Nav>
       <NavHeader>
@@ -58,6 +62,10 @@ export default function Header(props) {
         <NavSubTitle>
           <h2>Quality Improvement Tracking Tool For EMS</h2>
         </NavSubTitle>
+        <DataRange>
+          <h6>Date Range : {props.date}</h6>
+        </DataRange>
+        <Input Input type="text" placeholder="Model Search" />
       </NavHeader>
     </Nav>
   );
