@@ -56,3 +56,39 @@ body {
 .disableIndicator {
   display: none;
 }
+
+.progress-control {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 20% 20% 20% 20%;
+  grid-gap: 12px;
+  margin: 0 128px;
+}
+
+.progress-control-div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+}
+
+.progress-control-outer {
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+}
+
+.progress-control div img {
+  width: 15px;
+  margin-left: 6px;
+}
+
+.progress-control div p {
+  color: #666;
+  font-size: 12px;
+  margin-top: 0;
+  margin-bottom: 0;
+}

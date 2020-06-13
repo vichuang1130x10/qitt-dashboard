@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import direction from "../images/direction.png";
 
 const Nav = styled.div`
   background-color: #fff;
@@ -8,7 +9,7 @@ const Nav = styled.div`
 
 const NavHeader = styled.div`
   max-width: 1200px;
-  padding: 20px 20px;
+  padding: 20px 20px 5px 20px;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -44,7 +45,7 @@ const Input = styled.input`
   text-align: center;
 
   width: 20%;
-  margin: 0px 128px;
+  margin: 0px 128px 10px 128px;
 
   &:active,
   &:focus {
@@ -66,6 +67,28 @@ export default function HeaderWithSearchBar(props) {
           <h6>Date Range : {props.date}</h6>
         </DataRange>
         <Input Input type="text" placeholder="Model Search" />
+        <div className="progress-control">
+          <div className="progress-control-div">
+            Model <img src={direction} alt="direction" width="15px" />
+          </div>
+          <div className="progress-control-outer">
+            <div className="progress-control-div">
+              F/E Yield
+              <img src={direction} alt="direction" width="15px" />
+            </div>
+            <p>(SMT1 + SMT2)</p>
+          </div>
+          <div className="progress-control-outer">
+            <div className="progress-control-div">
+              B/E Yield
+              <img src={direction} alt="direction" width="15px" />
+            </div>
+            <p>(ASM + CPLD + VCL + FCT + DAOI)</p>
+          </div>
+          <div className="progress-control-div">
+            FTY <img src={direction} alt="direction" width="15px" />
+          </div>
+        </div>
       </NavHeader>
     </Nav>
   );
