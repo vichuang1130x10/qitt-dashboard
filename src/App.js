@@ -4,6 +4,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.scss";
 import FileHandling from "./Page/FileHandling";
 import ResultPresent from "./Page/ResultPresent";
+import Detail from "./Page/Detail";
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
       <Router>
         <FileHandling path="/" />
         <ResultPresent path="/result" />
+        <Detail path="/detail" />
       </Router>
     </div>
   );

@@ -3,6 +3,7 @@ import HeaderWithSearchBar from "../Component/HeaderWithSearchBar";
 import { Container, Row } from "react-bootstrap";
 import { outputDate } from "../Utils/HelperFunction";
 import ModelCards from "../Component/ModelCard";
+import { navigate } from "@reach/router";
 
 export default function ResultPresent(props) {
   console.log("result page start");
@@ -42,7 +43,6 @@ export default function ResultPresent(props) {
         } else {
           return -1;
         }
-        return 0;
       });
     } else {
       sortList = yieldRate.sort((a, b) => {
@@ -51,7 +51,6 @@ export default function ResultPresent(props) {
         } else {
           return -1;
         }
-        return 0;
       });
     }
     setYieldRate(sortList);
@@ -104,6 +103,18 @@ export default function ResultPresent(props) {
     setSortFTYFlag(!sortFTYFlag);
   };
 
+  const goToDetailByCard = (modelName) => {
+    const modelDetail =
+      yieldRate.filter((model) => model.model === modelName)[0] || {};
+    navigate(`/detail`, {
+      state: {
+        modelName,
+        modelDetail,
+        startDate: outputDate(YieldRate.startDate),
+        endDate: outputDate(YieldRate.endDate),
+      },
+    });
+  };
   // console.log(ErrorAnalysis);
   // console.log(YieldRate);
 
@@ -129,6 +140,7 @@ export default function ResultPresent(props) {
                 FE={model.FE}
                 BE={model.BE}
                 FTY={model.FTY}
+                onCardClick={(modelName) => goToDetailByCard(modelName)}
               />
             ))}
           </div>

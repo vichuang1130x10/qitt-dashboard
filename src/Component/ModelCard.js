@@ -21,9 +21,13 @@ const ModelBlock = styled.div`
   padding: 10px;
 `;
 
-export default function ModelCard({ model, FE, BE, FTY }) {
+export default function ModelCard({ model, FE, BE, FTY, onCardClick }) {
   return (
-    <ModelContainer>
+    <ModelContainer
+      onClick={() => {
+        onCardClick(model);
+      }}
+    >
       <ModelBlock FTY={100}>
         <div>{`${separateString(model)[0]}`}</div>
         <div>{`(${separateString(model)[1]}`}</div>
