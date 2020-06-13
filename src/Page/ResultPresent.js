@@ -1,7 +1,7 @@
 import React from "react";
 
 import { Container, Row, Badge } from "react-bootstrap";
-import { outputDate } from "../Utils/helperFunction";
+import { outputDate } from "../Utils/HelperFunction";
 
 export default function ResultPresent(props) {
   console.log("result page start");

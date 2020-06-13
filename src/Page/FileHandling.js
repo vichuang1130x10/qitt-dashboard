@@ -1,12 +1,14 @@
 import React, { useState } from "react";
-import { Container, Row, Col, Button } from "react-bootstrap";
+import Button from "../Component/Button";
+import { Container, Row, Col } from "react-bootstrap";
 import { navigate } from "@reach/router";
 import DragCard from "../Component/DragCard";
 import { FaHourglass } from "react-icons/fa";
 import {
   mappingErrorListAndRepairList,
   parsingErrorList,
-} from "../Utils/utilities";
+} from "../Utils/UtilitiesForFileHandle";
+import Header from "../Component/Header";
 
 export default function FileHandling() {
   const [yieldRate, setYieldRate] = useState({});
@@ -47,8 +49,8 @@ export default function FileHandling() {
 
   return (
     <div>
+      <Header />
       <Container>
-        <h1 className="text-left">Quality Improvement Tracking Tool For USI</h1>
         <h6 className="text-left m-auot mt-5">
           Pick The Files For Generating The Quality Data
         </h6>
