@@ -26,28 +26,6 @@ const NavSubTitle = styled.div`
   padding: 0 64px;
 `;
 
-const Input = styled.input`
-  font-size: 16px;
-  border: solid 1px #dbdbdb;
-  border-radius: 3px;
-  color: #262626;
-  padding: 7px 33px;
-  border-radius: 3px;
-  color: #999;
-  cursor: text;
-  font-size: 14px;
-  font-weight: 300;
-  text-align: center;
-
-  width: 20%;
-  margin: 40px 40px;
-
-  &:active,
-  &:focus {
-    text-align: left;
-  }
-`;
-
 export default function Header(props) {
   return (
     <Nav>

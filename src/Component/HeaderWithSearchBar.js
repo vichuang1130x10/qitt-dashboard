@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import direction from "../images/direction.png";
+import { Link } from "@reach/router";
 
 const Nav = styled.div`
   background-color: #fff;
@@ -54,11 +55,20 @@ const Input = styled.input`
 `;
 
 export default function HeaderWithSearchBar(props) {
+  const [value, setValue] = useState("");
+
+  const onValueChanged = (v) => {
+    setValue(v);
+    props.searchBarOnchanged(v);
+  };
+
   return (
     <Nav>
       <NavHeader>
         <NavTitle>
-          <h3>SUPERMICRO ME</h3>
+          <Link to="/" style={{ color: "#000" }}>
+            <h3>SUPERMICRO ME</h3>
+          </Link>
         </NavTitle>
         <NavSubTitle>
           <h2>Quality Improvement Tracking Tool For EMS</h2>
@@ -66,7 +76,12 @@ export default function HeaderWithSearchBar(props) {
         <DataRange>
           <h6>Date Range : {props.date}</h6>
         </DataRange>
-        <Input Input type="text" placeholder="Model Search" />
+        <Input
+          Input
+          type={value}
+          onChange={(e) => onValueChanged(e.target.value)}
+          placeholder="Model Search"
+        />
         <div className="progress-control">
           <div className="progress-control-div">
             Model <img src={direction} alt="direction" width="15px" />

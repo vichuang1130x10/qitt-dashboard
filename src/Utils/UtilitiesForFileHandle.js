@@ -174,7 +174,8 @@ function generateFTY(obj) {
     let model = obj[key];
     const fePass = Math.max(model.SMT1.Pass || 0, model.SMT2.Pass || 0);
     const feFail = (model.SMT1.Fail || 0) + (model.SMT2.Fail || 0);
-    const feYield = parseFloat(((fePass / (fePass + feFail)) * 100).toFixed(1));
+    const feYield =
+      parseFloat(((fePass / (fePass + feFail)) * 100).toFixed(1)) || 0;
     const bePass = Math.max(
       model.ASM.Pass || 0,
       model.CPLD.Pass || 0,
@@ -188,14 +189,17 @@ function generateFTY(obj) {
       (model.FCT.Fail || 0) +
       (model.DAOI.Fail || 0);
 
-    const beYield = parseFloat(((bePass / (bePass + beFail)) * 100).toFixed(1));
-    const fty = parseFloat(((feYield * beYield) / 100).toFixed(1));
+    const beYield =
+      parseFloat(((bePass / (bePass + beFail)) * 100).toFixed(1)) || 0;
+    const fty =
+      parseFloat(((feYield * beYield) / 100).toFixed(1)) ||
+      Math.max(feYield, beYield);
     obj[key] = {
       ...obj[key],
       FE: {
         Pass: fePass,
         Fail: feFail,
-        Yeild: feYield,
+        Yield: feYield,
       },
       BE: {
         Pass: bePass,

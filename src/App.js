@@ -4,7 +4,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.scss";
 import FileHandling from "./Page/FileHandling";
 import ResultPresent from "./Page/ResultPresent";
-import { Container, Row } from "react-bootstrap";
 
 function App() {
   return (
