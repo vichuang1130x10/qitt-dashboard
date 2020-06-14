@@ -112,6 +112,7 @@ export default function ResultPresent(props) {
         modelDetail,
         startDate: outputDate(YieldRate.startDate),
         endDate: outputDate(YieldRate.endDate),
+        errorAnalysis: errorAnalysis[modelName],
       },
     });
   };

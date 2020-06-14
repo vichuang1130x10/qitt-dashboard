@@ -18,7 +18,7 @@ class Chart extends Component {
     // 1. map date to x-position
     // get min and max of date
     const updateData = data
-      .filter((d) => d.Pass !== 0 && d.Total !== 0)
+      .filter((d) => d.Pass > 5 && d.Total > 5)
       .map((d) => ({
         date: d.Date,
         yield: parseFloat(((d.Pass / d.Total) * 100).toFixed(1)),
@@ -102,14 +102,14 @@ class Chart extends Component {
             </text>
           ))}
           {this.state.bars.map((d) => (
-            <circle cx={d.x} cy={d.y} r={4} fill={"blue"} />
+            <circle cx={d.x} cy={d.y} r={4} fill={"#bada55"} />
           ))}
         </g>
 
         <path
           d={this.state.line}
           fill={"none"}
-          stroke={"blue"}
+          stroke={"#bada55"}
           strokeWidth={"3px"}
         />
         <g ref="xAxis" transform={`translate(0, ${height - margin.bottom})`} />

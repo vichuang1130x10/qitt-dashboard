@@ -13,6 +13,7 @@ class Detail extends Component {
     modelDetail: {},
     station: "SMT1",
     trendData: [],
+    errorAnalysis: [],
   };
 
   componentDidMount() {
@@ -22,6 +23,7 @@ class Detail extends Component {
       endDate,
       modelName,
       modelDetail,
+      errorAnalysis,
     } = this.props.location.state;
     this.setState({
       tableData: this.props.location.state,
@@ -30,6 +32,7 @@ class Detail extends Component {
       modelName,
       modelDetail,
       trendData: modelDetail[this.state.station].data,
+      errorAnalysis,
     });
   }
 
@@ -40,8 +43,57 @@ class Detail extends Component {
     });
   };
 
+  parsingToQty = () => {
+    const allDefects = {};
+    const { errorAnalysis, station } = this.state;
+    errorAnalysis[station].ErorrDescriptions.forEach((defect) => {
+      if (
+        allDefects[defect.description] === null ||
+        allDefects[defect.description] === undefined
+      ) {
+        allDefects[defect.description] = 1;
+      } else {
+        allDefects[defect.description] += 1;
+      }
+    });
+
+    let sortable = [];
+    for (let defect in allDefects) {
+      sortable.push([defect, allDefects[defect]]);
+    }
+
+    sortable.sort(function (a, b) {
+      return b[1] - a[1];
+    });
+    const totalDefects = sortable.reduce((acc, elem) => acc + elem[1], 0);
+
+    console.log("parsingToQty");
+    console.log(totalDefects);
+    const result = [];
+    let accumulate = 0;
+    sortable.forEach((d) => {
+      const indiv = parseInt((d[1] / totalDefects) * 100);
+      accumulate += d[1];
+      result.push({
+        defectName: d[0],
+        qty: d[1],
+        indiv: indiv,
+        accu: parseInt((accumulate / totalDefects) * 100),
+      });
+    });
+    // const arr = this.state.errorAnalysis[this.state.station].ErorrDescriptions;
+    // console.log(arr);
+    return result;
+  };
+
   render() {
-    const { tableData, startDate, station, trendData } = this.state;
+    const {
+      tableData,
+      startDate,
+      station,
+      trendData,
+      errorAnalysis,
+    } = this.state;
 
     return startDate.length ? (
       <>
@@ -79,7 +131,7 @@ class Detail extends Component {
             <div>
               <h4>Defect Symptom Analysis:</h4>
               <br />
-              <div style={{ width: "80%" }}>
+              <div style={{ width: "100%" }}>
                 <Table
                   striped
                   bordered
@@ -95,7 +147,16 @@ class Detail extends Component {
                       <th>Comulated%</th>
                     </tr>
                   </thead>
-                  <tbody></tbody>
+                  <tbody>
+                    {this.parsingToQty().map((item) => (
+                      <tr key={item.item}>
+                        <td>{item.defectName}</td>
+                        <td>{item.qty}</td>
+                        <td>{item.indiv}</td>
+                        <td>{item.accu}</td>
+                      </tr>
+                    ))}
+                  </tbody>
                 </Table>
               </div>
             </div>
