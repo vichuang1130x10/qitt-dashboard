@@ -57,6 +57,7 @@ const TableContainer = styled.div`
 
 export default function HeaderWithTable(props) {
   console.log(props);
+  //   const [startDate, endDate, modelName, modelDetail] = props.data;
   return (
     <Nav>
       <NavHeader>
@@ -101,8 +102,9 @@ export default function HeaderWithTable(props) {
                 <th>SMT1</th>
                 <th>SMT2</th>
                 <th>ASM</th>
+                <th>ICT</th>
                 <th>CPLD</th>
-                <th>VCL</th>
+                <th>VOL</th>
                 <th>FCT</th>
                 <th>DAOI</th>
               </tr>
@@ -110,43 +112,134 @@ export default function HeaderWithTable(props) {
             <tbody>
               <tr>
                 <th>YIELD</th>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td>
+                  {props.data.modelDetail.SMT1.Pass !== 0 &&
+                  props.data.modelDetail.SMT1.Total !== 0
+                    ? (
+                        (props.data.modelDetail.SMT1.Pass /
+                          props.data.modelDetail.SMT1.Total) *
+                        100
+                      ).toFixed(1)
+                    : 0}{" "}
+                  %
+                </td>
+                <td>
+                  {" "}
+                  {props.data.modelDetail.SMT2.Pass !== 0 &&
+                  props.data.modelDetail.SMT2.Total !== 0
+                    ? (
+                        (props.data.modelDetail.SMT2.Pass /
+                          props.data.modelDetail.SMT2.Total) *
+                        100
+                      ).toFixed(1)
+                    : 0}{" "}
+                  %
+                </td>
+                <td>
+                  {" "}
+                  {props.data.modelDetail.ASM.Pass !== 0 &&
+                  props.data.modelDetail.ASM.Total !== 0
+                    ? (
+                        (props.data.modelDetail.ASM.Pass /
+                          props.data.modelDetail.ASM.Total) *
+                        100
+                      ).toFixed(1)
+                    : 0}{" "}
+                  %
+                </td>
+                <td>
+                  {" "}
+                  {props.data.modelDetail.ICT.Pass !== 0 &&
+                  props.data.modelDetail.ICT.Total !== 0
+                    ? (
+                        (props.data.modelDetail.ICT.Pass /
+                          props.data.modelDetail.ICT.Total) *
+                        100
+                      ).toFixed(1)
+                    : "NA"}{" "}
+                  %
+                </td>
+                <td>
+                  {" "}
+                  {props.data.modelDetail.CPLD.Pass !== 0 &&
+                  props.data.modelDetail.CPLD.Total !== 0
+                    ? (
+                        (props.data.modelDetail.CPLD.Pass /
+                          props.data.modelDetail.CPLD.Total) *
+                        100
+                      ).toFixed(1)
+                    : 0}{" "}
+                  %
+                </td>
+                <td>
+                  {" "}
+                  {props.data.modelDetail.VOL.Pass !== 0 &&
+                  props.data.modelDetail.VOL.Total !== 0
+                    ? (
+                        (props.data.modelDetail.VOL.Pass /
+                          props.data.modelDetail.VOL.Total) *
+                        100
+                      ).toFixed(1)
+                    : 0}{" "}
+                  %
+                </td>
+                <td>
+                  {" "}
+                  {props.data.modelDetail.FCT.Pass !== 0 &&
+                  props.data.modelDetail.FCT.Total !== 0
+                    ? (
+                        (props.data.modelDetail.FCT.Pass /
+                          props.data.modelDetail.FCT.Total) *
+                        100
+                      ).toFixed(1)
+                    : 0}{" "}
+                  %
+                </td>
+                <td>
+                  {" "}
+                  {props.data.modelDetail.DAOI.Pass !== 0 &&
+                  props.data.modelDetail.DAOI.Total !== 0
+                    ? (
+                        (props.data.modelDetail.DAOI.Pass /
+                          props.data.modelDetail.DAOI.Total) *
+                        100
+                      ).toFixed(1)
+                    : 0}{" "}
+                  %
+                </td>
               </tr>
               <tr>
                 <th>INPUT</th>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td>{props.data.modelDetail.SMT1.Total}</td>
+                <td>{props.data.modelDetail.SMT2.Total}</td>
+                <td>{props.data.modelDetail.ASM.Total}</td>
+                <td>{props.data.modelDetail.ICT.Total}</td>
+                <td>{props.data.modelDetail.CPLD.Total}</td>
+                <td>{props.data.modelDetail.VOL.Total}</td>
+                <td>{props.data.modelDetail.FCT.Total}</td>
+                <td>{props.data.modelDetail.DAOI.Total}</td>
               </tr>
               <tr>
                 <th>PASS</th>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td>{props.data.modelDetail.SMT1.Pass}</td>
+                <td>{props.data.modelDetail.SMT2.Pass}</td>
+                <td>{props.data.modelDetail.ASM.Pass}</td>
+                <td>{props.data.modelDetail.ICT.Pass}</td>
+                <td>{props.data.modelDetail.CPLD.Pass}</td>
+                <td>{props.data.modelDetail.VOL.Pass}</td>
+                <td>{props.data.modelDetail.FCT.Pass}</td>
+                <td>{props.data.modelDetail.DAOI.Pass}</td>
               </tr>
               <tr>
                 <th>FAIL</th>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td>{props.data.modelDetail.SMT1.Fail}</td>
+                <td>{props.data.modelDetail.SMT2.Fail}</td>
+                <td>{props.data.modelDetail.ASM.Fail}</td>
+                <td>{props.data.modelDetail.ICT.Fail}</td>
+                <td>{props.data.modelDetail.CPLD.Fail}</td>
+                <td>{props.data.modelDetail.VOL.Fail}</td>
+                <td>{props.data.modelDetail.FCT.Fail}</td>
+                <td>{props.data.modelDetail.DAOI.Fail}</td>
               </tr>
             </tbody>
           </Table>
