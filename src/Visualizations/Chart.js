@@ -96,13 +96,13 @@ class Chart extends Component {
       <svg width={width} height={height}>
         <g>
           {" "}
-          {this.state.bars.map((d) => (
-            <text x={d.x + 2} y={d.y - 5}>
+          {this.state.bars.map((d, i) => (
+            <text key={i} x={d.x + 2} y={d.y - 5}>
               {d.text}
             </text>
           ))}
-          {this.state.bars.map((d) => (
-            <circle cx={d.x} cy={d.y} r={4} fill={"#bada55"} />
+          {this.state.bars.map((d, i) => (
+            <circle key={i} cx={d.x} cy={d.y} r={4} fill={"#bada55"} />
           ))}
         </g>
 

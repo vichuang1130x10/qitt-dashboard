@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import HeaderWithTable from "../Component/HeaderWithTable";
-import { Container, Row } from "react-bootstrap";
+import { Container, Row, Col } from "react-bootstrap";
 import Chart from "../Visualizations/Chart";
 import { Table } from "react-bootstrap";
 
@@ -66,9 +66,6 @@ class Detail extends Component {
       return b[1] - a[1];
     });
     const totalDefects = sortable.reduce((acc, elem) => acc + elem[1], 0);
-
-    console.log("parsingToQty");
-    console.log(totalDefects);
     const result = [];
     let accumulate = 0;
     sortable.forEach((d) => {
@@ -149,7 +146,7 @@ class Detail extends Component {
                   </thead>
                   <tbody>
                     {this.parsingToQty().map((item) => (
-                      <tr key={item.item}>
+                      <tr key={item.defectName}>
                         <td>{item.defectName}</td>
                         <td>{item.qty}</td>
                         <td>{item.indiv}</td>
@@ -160,6 +157,92 @@ class Detail extends Component {
                 </Table>
               </div>
             </div>
+          </Row>
+          <Row>
+            <Col>
+              <Table
+                striped
+                bordered
+                hover
+                size="sm"
+                style={{ fontSize: "16px" }}
+              >
+                <thead>
+                  <tr>
+                    <th>Defect Item </th>
+                    <th>Q'ty(pcs)</th>
+                    <th>Individual%</th>
+                    <th>Comulated%</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {this.parsingToQty().map((item) => (
+                    <tr key={item.defectName}>
+                      <td>{item.defectName}</td>
+                      <td>{item.qty}</td>
+                      <td>{item.indiv}</td>
+                      <td>{item.accu}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </Table>
+            </Col>
+            <Col>
+              <Table
+                striped
+                bordered
+                hover
+                size="sm"
+                style={{ fontSize: "16px" }}
+              >
+                <thead>
+                  <tr>
+                    <th>Defect Item </th>
+                    <th>Q'ty(pcs)</th>
+                    <th>Individual%</th>
+                    <th>Comulated%</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {this.parsingToQty().map((item) => (
+                    <tr key={item.defectName}>
+                      <td>{item.defectName}</td>
+                      <td>{item.qty}</td>
+                      <td>{item.indiv}</td>
+                      <td>{item.accu}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </Table>
+            </Col>
+            <Col>
+              <Table
+                striped
+                bordered
+                hover
+                size="sm"
+                style={{ fontSize: "16px" }}
+              >
+                <thead>
+                  <tr>
+                    <th>Defect Item </th>
+                    <th>Q'ty(pcs)</th>
+                    <th>Individual%</th>
+                    <th>Comulated%</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {this.parsingToQty().map((item) => (
+                    <tr key={item.defectName}>
+                      <td>{item.defectName}</td>
+                      <td>{item.qty}</td>
+                      <td>{item.indiv}</td>
+                      <td>{item.accu}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </Table>
+            </Col>
           </Row>
           <div style={{ marginBottom: "500px" }}></div>
         </Container>
