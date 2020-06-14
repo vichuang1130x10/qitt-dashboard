@@ -142,7 +142,16 @@ export function parseForYieldRate(updatedJson) {
         n[obj.Model][obj.Type].Fail += obj.Fail;
         n[obj.Model][obj.Type].Total += obj.Total;
         const { Date, Pass, Fail, Total } = obj;
-        n[obj.Model][obj.Type].data.push({ Date, Pass, Fail, Total });
+        const sameDateObje = n[obj.Model][obj.Type].data.find(
+          (elem) => elem.Date.toString() === Date.toString()
+        );
+        if (sameDateObje) {
+          sameDateObje.Pass += Pass;
+          sameDateObje.Fail += Fail;
+          sameDateObje.Total += Total;
+        } else {
+          n[obj.Model][obj.Type].data.push({ Date, Pass, Fail, Total });
+        }
       }
     }
   });

@@ -57,7 +57,7 @@ const TableContainer = styled.div`
 
 export default function HeaderWithTable(props) {
   console.log(props);
-  //   const [startDate, endDate, modelName, modelDetail] = props.data;
+
   return (
     <Nav>
       <NavHeader>
