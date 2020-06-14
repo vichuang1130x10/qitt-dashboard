@@ -14,6 +14,7 @@ class Detail extends Component {
     station: "SMT1",
     trendData: [],
     errorAnalysis: [],
+    sortFailure: [],
   };
 
   componentDidMount() {
@@ -33,6 +34,7 @@ class Detail extends Component {
       modelDetail,
       trendData: modelDetail[this.state.station].data,
       errorAnalysis,
+      sortFailure: this.parsingToQty(errorAnalysis, this.state.station),
     });
   }
 
@@ -40,13 +42,16 @@ class Detail extends Component {
     this.setState({
       station: str,
       trendData: this.state.modelDetail[str].data,
+      sortFailure: this.parsingToQty(this.state.errorAnalysis, str),
     });
   };
 
-  parsingToQty = () => {
+  parsingToQty = (e, str) => {
+    console.log("parsing");
+    console.log(e);
     const allDefects = {};
-    const { errorAnalysis, station } = this.state;
-    errorAnalysis[station].ErorrDescriptions.forEach((defect) => {
+    // const { station } = this.state;
+    e[str].ErorrDescriptions.forEach((defect) => {
       if (
         allDefects[defect.description] === null ||
         allDefects[defect.description] === undefined
@@ -90,6 +95,7 @@ class Detail extends Component {
       station,
       trendData,
       errorAnalysis,
+      sortFailure,
     } = this.state;
 
     return startDate.length ? (
@@ -145,7 +151,7 @@ class Detail extends Component {
                     </tr>
                   </thead>
                   <tbody>
-                    {this.parsingToQty().map((item) => (
+                    {sortFailure.map((item) => (
                       <tr key={item.defectName}>
                         <td>{item.defectName}</td>
                         <td>{item.qty}</td>
@@ -159,90 +165,9 @@ class Detail extends Component {
             </div>
           </Row>
           <Row>
-            <Col>
-              <Table
-                striped
-                bordered
-                hover
-                size="sm"
-                style={{ fontSize: "16px" }}
-              >
-                <thead>
-                  <tr>
-                    <th>Defect Item </th>
-                    <th>Q'ty(pcs)</th>
-                    <th>Individual%</th>
-                    <th>Comulated%</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {this.parsingToQty().map((item) => (
-                    <tr key={item.defectName}>
-                      <td>{item.defectName}</td>
-                      <td>{item.qty}</td>
-                      <td>{item.indiv}</td>
-                      <td>{item.accu}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </Table>
-            </Col>
-            <Col>
-              <Table
-                striped
-                bordered
-                hover
-                size="sm"
-                style={{ fontSize: "16px" }}
-              >
-                <thead>
-                  <tr>
-                    <th>Defect Item </th>
-                    <th>Q'ty(pcs)</th>
-                    <th>Individual%</th>
-                    <th>Comulated%</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {this.parsingToQty().map((item) => (
-                    <tr key={item.defectName}>
-                      <td>{item.defectName}</td>
-                      <td>{item.qty}</td>
-                      <td>{item.indiv}</td>
-                      <td>{item.accu}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </Table>
-            </Col>
-            <Col>
-              <Table
-                striped
-                bordered
-                hover
-                size="sm"
-                style={{ fontSize: "16px" }}
-              >
-                <thead>
-                  <tr>
-                    <th>Defect Item </th>
-                    <th>Q'ty(pcs)</th>
-                    <th>Individual%</th>
-                    <th>Comulated%</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {this.parsingToQty().map((item) => (
-                    <tr key={item.defectName}>
-                      <td>{item.defectName}</td>
-                      <td>{item.qty}</td>
-                      <td>{item.indiv}</td>
-                      <td>{item.accu}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </Table>
-            </Col>
+            <Col></Col>
+            <Col></Col>
+            <Col></Col>
           </Row>
           <div style={{ marginBottom: "500px" }}></div>
         </Container>
