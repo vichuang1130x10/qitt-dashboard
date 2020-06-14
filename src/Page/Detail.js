@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import HeaderWithTable from "../Component/HeaderWithTable";
-import { Container, Row, Col } from "react-bootstrap";
+import { Container, Row } from "react-bootstrap";
 import Chart from "../Visualizations/Chart";
-import { Table } from "react-bootstrap";
 import DefectTable from "../Component/DefectTable";
 
 class Detail extends Component {

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import HeaderWithSearchBar from "../Component/HeaderWithSearchBar";
 import { Container, Row } from "react-bootstrap";
-import { outputDate } from "../Utils/HelperFunction";
+import { outputDate } from "../utils/helperfunction";
 import ModelCards from "../Component/ModelCard";
 import { navigate } from "@reach/router";
 

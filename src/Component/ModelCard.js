@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import React from "react";
-import { separateString } from "../Utils/HelperFunction";
+import { separateString } from "../utils/helperfunction";
 
 const ModelContainer = styled.div`
   width: 100%;
