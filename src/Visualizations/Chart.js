@@ -120,3 +120,28 @@ class Chart extends Component {
 }
 
 export default Chart;
+
+// componentDidMount() {
+//   d3.select(this.refs.wavePath)
+//     .datum(this.props.waveData)
+//     .attr("d",this.props.line)
+// }
+// componentDidUpdate() {
+//   d3.select(this.refs.wavePath)
+//     .datum(this.props.waveData)
+//     .attr("d",this.props.line)
+// }
+// render () {
+//   return (
+//     <svg width="760" height="200" id="waveform">
+//       <g id="waveShape" ref="waveGroup">
+//         <path
+//           className="wave"
+//           transform="translate(0,10)"
+//           ref="wavePath"
+//         />
+//       </g>
+//     </svg>
+//   )
+// }
+// }

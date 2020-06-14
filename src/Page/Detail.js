@@ -3,6 +3,7 @@ import HeaderWithTable from "../Component/HeaderWithTable";
 import { Container, Row, Col } from "react-bootstrap";
 import Chart from "../Visualizations/Chart";
 import { Table } from "react-bootstrap";
+import DefectTable from "../Component/DefectTable";
 
 class Detail extends Component {
   state = {
@@ -15,6 +16,7 @@ class Detail extends Component {
     trendData: [],
     errorAnalysis: [],
     sortFailure: [],
+    topThree: [],
   };
 
   componentDidMount() {
@@ -85,7 +87,53 @@ class Detail extends Component {
     });
     // const arr = this.state.errorAnalysis[this.state.station].ErorrDescriptions;
     // console.log(arr);
+
     return result;
+  };
+
+  parsingRootCause = (failureName, e, str) => {
+    const result = [];
+    const rootCause = {};
+    const failures = e[str].ErorrDescriptions;
+
+    const f = failures.filter((failure) => failure.description === failureName);
+    f.forEach((reason) => {
+      result.push(`${reason.reasons[0].reason}/${reason.reasons[0].item}`);
+    });
+
+    console.log(result);
+
+    result.forEach((item) => {
+      if (rootCause[item] === null || rootCause[item] === undefined) {
+        rootCause[item] = 1;
+      } else {
+        rootCause[item] += 1;
+      }
+    });
+
+    let sortable = [];
+    for (let defect in rootCause) {
+      sortable.push([defect, rootCause[defect]]);
+    }
+
+    sortable.sort(function (a, b) {
+      return b[1] - a[1];
+    });
+
+    const totalDefects = sortable.reduce((acc, elem) => acc + elem[1], 0);
+    const rootCauseResult = [];
+    let accumulate = 0;
+    sortable.forEach((d) => {
+      const indiv = parseInt((d[1] / totalDefects) * 100);
+      accumulate += d[1];
+      rootCauseResult.push({
+        defectName: d[0],
+        qty: d[1],
+        indiv: indiv,
+        accu: parseInt((accumulate / totalDefects) * 100),
+      });
+    });
+    return rootCauseResult;
   };
 
   render() {
@@ -135,40 +183,56 @@ class Detail extends Component {
               <h4>Defect Symptom Analysis:</h4>
               <br />
               <div style={{ width: "100%" }}>
-                <Table
-                  striped
-                  bordered
-                  hover
-                  size="sm"
-                  style={{ fontSize: "16px" }}
-                >
-                  <thead>
-                    <tr>
-                      <th>Defect Item </th>
-                      <th>Q'ty(pcs)</th>
-                      <th>Individual%</th>
-                      <th>Comulated%</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {sortFailure.map((item) => (
-                      <tr key={item.defectName}>
-                        <td>{item.defectName}</td>
-                        <td>{item.qty}</td>
-                        <td>{item.indiv}</td>
-                        <td>{item.accu}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </Table>
+                <DefectTable sortFailure={sortFailure} />
               </div>
             </div>
           </Row>
           <Row>
-            <Col></Col>
-            <Col></Col>
-            <Col></Col>
+            <h4>TOP 3 Root Cause:</h4>
           </Row>
+          <Row>
+            {sortFailure.length ? (
+              <div>
+                <h6>{sortFailure[0].defectName}</h6>
+                <DefectTable
+                  sortFailure={this.parsingRootCause(
+                    sortFailure[0].defectName,
+                    errorAnalysis,
+                    station
+                  )}
+                />
+              </div>
+            ) : null}
+          </Row>
+          <Row>
+            {sortFailure[1] ? (
+              <div>
+                <h6>{sortFailure[1].defectName}</h6>
+                <DefectTable
+                  sortFailure={this.parsingRootCause(
+                    sortFailure[1].defectName,
+                    errorAnalysis,
+                    station
+                  )}
+                />
+              </div>
+            ) : null}
+          </Row>
+          <Row>
+            {sortFailure[2] ? (
+              <div>
+                <h6>{sortFailure[2].defectName}</h6>
+                <DefectTable
+                  sortFailure={this.parsingRootCause(
+                    sortFailure[2].defectName,
+                    errorAnalysis,
+                    station
+                  )}
+                />
+              </div>
+            ) : null}
+          </Row>
+
           <div style={{ marginBottom: "500px" }}></div>
         </Container>
       </>
@@ -178,31 +242,29 @@ class Detail extends Component {
 
 export default Detail;
 
-// //<option value="SMT1">SMT1</option>
-// <option value="SMT2">SMT2</option>
-// <option value="ASM">ASM</option>
-// <option value="ICT">ICT</option>
-// <option value="SMT2">SMT2</option>
-// export default function Detail(props) {
-//     console.log("detail page start");
-//     const [modelData, setModelData] = useState({});
-//     const [selection, setSelection] = useState("SMT1");
-//     const [trendData, setTrendData] = useState([]);
-
-//     useEffect(() => {
-//       setModelData(props.location.state);
-
-//       // const data = modelData.modelDetail[selection].data.filter(
-//       //   (d) => d.Pass !== 0 && d.Total !== 0
-//       // );
-//       // setTrendData(data);
-//     }, [props.location.state, modelData]);
-
-//     const udpateStation = (str) => {
-//       console.log("updateStation call");
-//       setSelection(str);
-//       const data = modelData.modelDetail[selection].data.filter(
-//         (d) => d.Pass !== 0 && d.Total !== 0
-//       );
-//       setTrendData(data);
-//     };
+//    <Table
+// striped
+// bordered
+// hover
+// size="sm"
+// style={{ fontSize: "16px" }}
+// >
+// <thead>
+//   <tr>
+//     <th>Defect Item </th>
+//     <th>Q'ty(pcs)</th>
+//     <th>Individual%</th>
+//     <th>Comulated%</th>
+//   </tr>
+// </thead>
+// <tbody>
+//   {sortFailure.map((item) => (
+//     <tr key={item.defectName}>
+//       <td>{item.defectName}</td>
+//       <td>{item.qty}</td>
+//       <td>{item.indiv}</td>
+//       <td>{item.accu}</td>
+//     </tr>
+//   ))}
+// </tbody>
+// </Table>
