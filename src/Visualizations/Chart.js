@@ -9,8 +9,11 @@ class Chart extends Component {
     bars: [],
   };
 
-  xAxis = d3.axisBottom().tickFormat(d3.timeFormat("%b %d"));
-  yAxis = d3.axisLeft().tickFormat((d) => `${d}%`);
+  xAxis = React.createRef();
+  yAxis = React.createRef();
+
+  // xAxis = d3.axisBottom().tickFormat(d3.timeFormat("%b %d"));
+  // yAxis = d3.axisLeft().tickFormat((d) => `${d}%`);
 
   static getDerivedStateFromProps(nextProps, prevState) {
     const { data } = nextProps;
@@ -78,18 +81,21 @@ class Chart extends Component {
   }
 
   componentDidMount() {
-    this.xAxis.scale(this.state.xScale);
-    d3.select(this.refs.xAxis).call(this.xAxis);
-    this.yAxis.scale(this.state.yScale);
-    d3.select(this.refs.yAxis).call(this.yAxis);
+    this.createAxis();
   }
 
   componentDidUpdate() {
-    this.xAxis.scale(this.state.xScale);
-    d3.select(this.refs.xAxis).call(this.xAxis);
-    this.yAxis.scale(this.state.yScale);
-    d3.select(this.refs.yAxis).call(this.yAxis);
+    this.createAxis();
   }
+
+  createAxis = () => {
+    let xAxisD3 = d3.axisBottom().tickFormat(d3.timeFormat("%b %d"));
+    let yAxisD3 = d3.axisLeft().tickFormat((d) => `${d}%`);
+    xAxisD3.scale(this.state.xScale);
+    d3.select(this.xAxis.current).call(xAxisD3);
+    yAxisD3.scale(this.state.yScale);
+    d3.select(this.yAxis.current).call(yAxisD3);
+  };
 
   render() {
     return (
@@ -112,36 +118,14 @@ class Chart extends Component {
           stroke={"#bada55"}
           strokeWidth={"3px"}
         />
-        <g ref="xAxis" transform={`translate(0, ${height - margin.bottom})`} />
-        <g ref="yAxis" transform={`translate(${margin.left}, 0)`} />
+        <g
+          ref={this.xAxis}
+          transform={`translate(0, ${height - margin.bottom})`}
+        />
+        <g ref={this.yAxis} transform={`translate(${margin.left}, 0)`} />
       </svg>
     );
   }
 }
 
 export default Chart;
-
-// componentDidMount() {
-//   d3.select(this.refs.wavePath)
-//     .datum(this.props.waveData)
-//     .attr("d",this.props.line)
-// }
-// componentDidUpdate() {
-//   d3.select(this.refs.wavePath)
-//     .datum(this.props.waveData)
-//     .attr("d",this.props.line)
-// }
-// render () {
-//   return (
-//     <svg width="760" height="200" id="waveform">
-//       <g id="waveShape" ref="waveGroup">
-//         <path
-//           className="wave"
-//           transform="translate(0,10)"
-//           ref="wavePath"
-//         />
-//       </g>
-//     </svg>
-//   )
-// }
-// }

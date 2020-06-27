@@ -4,10 +4,8 @@ import { Container, Row, Col } from "react-bootstrap";
 import { navigate } from "@reach/router";
 import DragCard from "../Component/DragCard";
 import { FaHourglass } from "react-icons/fa";
-import {
-  mappingErrorListAndRepairList,
-  parsingErrorList,
-} from "../Utils/UtilitiesForFileHandle";
+import { parsingErrorList } from "../Utils/CmShopFloorParsing/ForUSI";
+import { mappingErrorListAndRepairList } from "../Utils/MappingErrorListAndRepariList";
 import Header from "../Component/Header";
 
 export default function FileHandling() {
@@ -32,7 +30,7 @@ export default function FileHandling() {
     mappingErrorListAndRepairList(errorList, repairList);
     const udpatedErrorList = errorList.ErrorList.map((ele) => {
       if (ele["Reason"] === null || ele["Reason"] === undefined) {
-        ele["Reason"] = "Under investigation";
+        ele["Reason"] = "待修";
       }
       return ele;
     });

@@ -1,5 +1,5 @@
 {
-  "name": "nud-compare-bom",
+  "name": "qitt-dashboard",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -23,7 +23,7 @@
     "xlsx": "^0.15.6"
   },
   "scripts": {
-    "start": "node server.js",
+    "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

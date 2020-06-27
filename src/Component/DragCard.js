@@ -1,7 +1,7 @@
 import React from "react";
 import { Card } from "react-bootstrap";
 // import Dropzone from "./Dragzone";
-import DropzoneForFailure from "./DropzoneForFailure";
+import DropzoneForFailure from "./DropzoneForFailureAnalysis";
 
 export default function DragCard({ title, fileType, callback, setFlag }) {
   return (
