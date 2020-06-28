@@ -206,11 +206,11 @@ const calculateData = (arr, type) => {
   const data = arr
     .filter((obj) => obj.Type === type)
     .map((obj) => ({
-      Week: `WK${getWeek(obj.Date)}`,
+      Week: getWeek(obj.Date),
       Pass: obj.Pass,
       Total: obj.Total,
     }));
-
+  // Week: `WK${getWeek(obj.Date)}`,
   const finalResult = {};
   data.forEach((obj) => {
     if (finalResult[obj.Week] === undefined || finalResult[obj.Week] === null) {
