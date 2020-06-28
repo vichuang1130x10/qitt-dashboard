@@ -35,7 +35,7 @@ export default function FileHandling() {
       return ele;
     });
     const parsedErrorList = parsingErrorList(udpatedErrorList);
-    navigate(`/result`, {
+    navigate(`/dashboard`, {
       state: { YieldRate: yieldRate, ErrorAnalysis: parsedErrorList },
     });
   };

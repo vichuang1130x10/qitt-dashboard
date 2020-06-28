@@ -5,6 +5,7 @@ import "./App.scss";
 import FileHandling from "./Page/FileHandling";
 import ResultPresent from "./Page/ResultPresent";
 import Detail from "./Page/Detail";
+import Dashboard from "./Page/Dashboard";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <FileHandling path="/" />
         <ResultPresent path="/result" />
         <Detail path="/detail" />
+        <Dashboard path="/dashboard" />
       </Router>
     </div>
   );

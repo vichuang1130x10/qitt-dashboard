@@ -16,6 +16,7 @@ export default function ResultPresent(props) {
   const [sortFTYFlag, setSortFTYFlag] = useState(false);
 
   const YieldRate = props.location.state.YieldRate;
+  console.log(YieldRate);
   useEffect(() => {
     const ErrorAnalysis = props.location.state.ErrorAnalysis;
     // const YieldRate = props.location.state.YieldRate;
