@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 
 import { Link } from "@reach/router";
@@ -38,16 +38,18 @@ const PageTitle = styled.div`
   padding: 0 64px;
 `;
 
-const NavRight = styled.div`
-  width: 33.333%;
-  text-align: right;
-
-  a {
-    margin-right: 20px;
-  }
+const Button = styled.button`
+  background-color: transparent;
+  border: 1px solid #dbdbdb;
+  color: #262626;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+  padding: 5px 9px;
+  text-transform: capitalize;
+  font-size: 14px;
+  margin-left: 20px;
 `;
-
-const MenuLink = styled.a``;
 
 export default function HeaderWithSearchBar(props) {
   return (
@@ -64,9 +66,14 @@ export default function HeaderWithSearchBar(props) {
         <DataRange>
           <h6>Date Range : {props.date}</h6>
         </DataRange>
-        <PageTitle>
-          <h5>SUMMARY PAGE</h5>
-        </PageTitle>
+        <div style={{ display: "flex" }}>
+          <PageTitle>
+            <h5>SUMMARY PAGE</h5>
+          </PageTitle>
+          <PageTitle>
+            <Button onClick={props.handleToDetail}>GO TO LIST PAGE</Button>
+          </PageTitle>
+        </div>
       </NavHeader>
     </Nav>
   );

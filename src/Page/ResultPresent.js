@@ -20,6 +20,7 @@ export default function ResultPresent(props) {
   useEffect(() => {
     const ErrorAnalysis = props.location.state.ErrorAnalysis;
     // const YieldRate = props.location.state.YieldRate;
+    console.log(ErrorAnalysis);
     setYieldRate(YieldRate.models);
     setErrorAnalysis(ErrorAnalysis);
   }, [
@@ -135,16 +136,18 @@ export default function ResultPresent(props) {
       <Container>
         <Row>
           <div className="model-list-container">
-            {yieldRate.map((model) => (
-              <ModelCards
-                key={model.model}
-                model={model.model}
-                FE={model.FE}
-                BE={model.BE}
-                FTY={model.FTY}
-                onCardClick={(modelName) => goToDetailByCard(modelName)}
-              />
-            ))}
+            {yieldRate
+              .filter((model) => model.FE.Pass !== 0 && model.BE.Pass !== 0)
+              .map((model) => (
+                <ModelCards
+                  key={model.model}
+                  model={model.model}
+                  FE={model.FE}
+                  BE={model.BE}
+                  FTY={model.FTY}
+                  onCardClick={(modelName) => goToDetailByCard(modelName)}
+                />
+              ))}
           </div>
         </Row>
       </Container>

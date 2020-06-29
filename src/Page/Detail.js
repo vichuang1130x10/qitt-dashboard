@@ -50,6 +50,9 @@ class Detail extends Component {
   parsingToQty = (e, str) => {
     console.log("parsing");
     console.log(e);
+    if (e === undefined || e === null) {
+      return [];
+    }
     const allDefects = {};
     // const { station } = this.state;
     e[str].ErorrDescriptions.forEach((defect) => {

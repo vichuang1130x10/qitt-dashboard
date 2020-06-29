@@ -7,6 +7,7 @@ import DashboardPieChart from "../Visualizations/DashboardPieChart";
 import blue from "../images/blue.png";
 import green from "../images/green.png";
 import orange from "../images/orange.png";
+import { navigate } from "@reach/router";
 
 export default function Dashboard(props) {
   console.log("Dashboard start");
@@ -31,12 +32,22 @@ export default function Dashboard(props) {
     props.location.state.YieldRate,
   ]);
 
+  const handleToDetail = () => {
+    navigate(`/result`, {
+      state: {
+        YieldRate: props.location.state.YieldRate,
+        ErrorAnalysis: props.location.state.ErrorAnalysis,
+      },
+    });
+  };
+
   return YieldRate.startDate ? (
     <>
       <HeaderForDash
         date={`${outputDate(YieldRate.startDate)} ~ ${outputDate(
           YieldRate.endDate
         )}`}
+        handleToDetail={() => handleToDetail()}
       />
       <Container>
         <Row>

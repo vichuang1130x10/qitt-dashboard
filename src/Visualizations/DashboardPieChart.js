@@ -7,7 +7,7 @@ const height = 300;
 class DashboardPieChart extends Component {
   state = {
     slices: [], // array of svg path commands, each representing a day
-    tempAnnotations: [],
+    labelData: [],
   };
 
   static getDerivedStateFromProps(nextProps, prevState) {
@@ -33,14 +33,13 @@ class DashboardPieChart extends Component {
       const percentage = parseFloat(((data / total) * 100).toFixed(1)) || 0;
       labelData.push(`${title} ${data} (${percentage}%)`);
     });
-    console.log(labelData);
 
     const colors = d3.scaleOrdinal(["#7fa396", "#4a8ddc", "#ebbd9f"]);
 
     const arcGenerator = d3.arc();
     const pieGenerator = d3.pie();
 
-    const label = d3
+    const tempAnnotations = d3
       .arc()
       .outerRadius(height / 3)
       .innerRadius(height / 3 - 80);
@@ -56,9 +55,18 @@ class DashboardPieChart extends Component {
       return { path, fill: colors(i) };
     });
 
+    // const labels = pie.map((d, i) => ({
+    //   startAngle: d.startAngle,
+    //   endAngle: d.endAngle,
+    //   innerRadius: 50,
+    //   outerRadius: height / 3,
+    // }));
+
+    // console.log("labels", labels);
+
     console.log(slices);
 
-    return { slices };
+    return { slices, labelData };
   }
 
   render() {
@@ -78,6 +86,15 @@ class DashboardPieChart extends Component {
             </g>
           ))} */}
         </g>
+        <text x="50" y="50" style={{ fontSize: "11px" }}>
+          {this.state.labelData[0]}
+        </text>
+        <text x="50" y="240" style={{ fontSize: "11px" }}>
+          {this.state.labelData[1]}
+        </text>
+        <text x="370" y="150" style={{ fontSize: "11px" }}>
+          {this.state.labelData[2]}
+        </text>
       </svg>
     );
   }
