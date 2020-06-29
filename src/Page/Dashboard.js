@@ -4,6 +4,9 @@ import { Container, Row, Col } from "react-bootstrap";
 import { outputDate } from "../Utils/helperFunction";
 import DashBlock from "../Component/DashBlock";
 import DashboardPieChart from "../Visualizations/DashboardPieChart";
+import blue from "../images/blue.png";
+import green from "../images/green.png";
+import orange from "../images/orange.png";
 
 export default function Dashboard(props) {
   console.log("Dashboard start");
@@ -44,13 +47,54 @@ export default function Dashboard(props) {
             <DashBlock data={otherData} title="OTHER" />
           </Col>
         </Row>
-        <Row>
+        <Row style={{ marginTop: "10px" }}>
           <Col>
             <DashBlock data={bpnData} title="BPN" />
           </Col>
           <Col>
-            <h4>Category %</h4>
-            <div>Category MB Other BPN</div>
+            <h4 style={{ textAlign: "center" }}>Category %</h4>
+            <div style={{ marginBottom: "4px" }}>
+              Category
+              <span style={{ marginLeft: "4px" }}>
+                <img
+                  src={blue}
+                  alt="blue"
+                  width="10px"
+                  style={{
+                    display: "inline-block",
+                    marginRight: "2px",
+                    paddingBottom: "2px",
+                  }}
+                />
+              </span>
+              MB
+              <span style={{ marginLeft: "4px" }}>
+                <img
+                  src={orange}
+                  alt="orange"
+                  width="10px"
+                  style={{
+                    display: "inline-block",
+                    marginRight: "2px",
+                    paddingBottom: "2px",
+                  }}
+                />
+              </span>
+              Other
+              <span style={{ marginLeft: "4px" }}>
+                <img
+                  src={green}
+                  alt="green"
+                  width="10px"
+                  style={{
+                    display: "inline-block",
+                    marginRight: "2px",
+                    paddingBottom: "2px",
+                  }}
+                />
+              </span>
+              BPN
+            </div>
             <DashboardPieChart data={piesData.fct2PieData} />
           </Col>
         </Row>

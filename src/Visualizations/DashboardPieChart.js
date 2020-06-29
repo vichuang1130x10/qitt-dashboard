@@ -16,24 +16,35 @@ class DashboardPieChart extends Component {
 
     const updateData = Object.values(data);
     console.log(updateData);
-    // const radiusScale = d3
-    //   .scaleLinear()
-    //   .domain([d3.min(data, (d) => d.low), d3.max(data, (d) => d.high)])
-    //   .range([0, width / 2]);
+    const total = updateData.reduce((acc, ele) => acc + ele, 0);
+    const labelData = [];
+    updateData.forEach((data, i) => {
+      let title = "";
+      switch (i) {
+        case 0:
+          title = "BPN";
+          break;
+        case 1:
+          title = "MB";
+          break;
+        default:
+          title = "OTHER";
+      }
+      const percentage = parseFloat(((data / total) * 100).toFixed(1)) || 0;
+      labelData.push(`${title} ${data} (${percentage}%)`);
+    });
+    console.log(labelData);
 
-    // const colorScale = d3
-    //   .scaleSequential()
-    //   .domain(d3.extent(data, (d) => d.avg))
-    //   .interpolator(d3.interpolateRdYlBu);
-
-    const colors = d3.scaleOrdinal(["#7fa396", "#ebbd9f", "#4a8ddc"]);
-
-    // get the angle for each slice
-    // 2PI / 365
-    // const perSliceAngle = (2 * Math.PI) / data.length;
+    const colors = d3.scaleOrdinal(["#7fa396", "#4a8ddc", "#ebbd9f"]);
 
     const arcGenerator = d3.arc();
     const pieGenerator = d3.pie();
+
+    const label = d3
+      .arc()
+      .outerRadius(height / 3)
+      .innerRadius(height / 3 - 80);
+
     const pie = pieGenerator(updateData);
     const slices = pie.map((d, i) => {
       const path = arcGenerator({
@@ -44,13 +55,6 @@ class DashboardPieChart extends Component {
       });
       return { path, fill: colors(i) };
     });
-
-    // const tempAnnotations = [5, 20, 40, 60, 80].map((temp) => {
-    //   return {
-    //     r: radiusScale(temp),
-    //     temp,
-    //   };
-    // });
 
     console.log(slices);
 
