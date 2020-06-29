@@ -3,6 +3,7 @@ import HeaderForDash from "../Component/HeaderForDash";
 import { Container, Row, Col } from "react-bootstrap";
 import { outputDate } from "../Utils/helperFunction";
 import DashBlock from "../Component/DashBlock";
+import DashboardPieChart from "../Visualizations/DashboardPieChart";
 
 export default function Dashboard(props) {
   console.log("Dashboard start");
@@ -48,7 +49,9 @@ export default function Dashboard(props) {
             <DashBlock data={bpnData} title="BPN" />
           </Col>
           <Col>
-            <DashBlock data={mbData} title="MB" />
+            <h4>Category %</h4>
+            <div>Category MB Other BPN</div>
+            <DashboardPieChart data={piesData.fct2PieData} />
           </Col>
         </Row>
       </Container>

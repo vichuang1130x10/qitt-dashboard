@@ -24,7 +24,10 @@ export default function DashBlock({ data, title }) {
     <div>
       <label htmlFor="station">
         <ChartContainer>
-          <h4>{title} last 10 weeks trend</h4>
+          <h4>
+            <span style={{ color: "#6FA4E3" }}>{title}</span> last 10 weeks
+            trend
+          </h4>
           <select
             id="station"
             value={station}
