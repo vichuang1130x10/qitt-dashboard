@@ -39,10 +39,8 @@ class BarChart extends Component {
         ? updateData.slice(updateData.length - 20, updateData.length)
         : updateData;
 
-    console.log("model bar chart start");
-    console.log(trimData);
     const x = trimData.map((d) => d.mo);
-    console.log(x);
+
     const xScale = d3
       .scaleBand()
       .domain(x)
@@ -50,7 +48,7 @@ class BarChart extends Component {
     const [min, max] = d3.extent(trimData, (d) => d.yield);
     const yScale = d3
       .scaleLinear()
-      .domain([Math.min(min, 90), max])
+      .domain([Math.min(min, 90), 100])
       .range([height - margin.bottom, margin.top]);
 
     const [yMin, yMax] = d3.extent(trimData, (d) => d.total);
@@ -74,6 +72,12 @@ class BarChart extends Component {
     }));
 
     const barWidth = trimData.length > 10 ? width / trimData.length - 25 : 50;
+    const textLabels = trimData.map((d) => ({
+      x: xScale(d.mo) + barWidth / 2,
+      y: yScaleRight(d.total),
+      text: d.total,
+    }));
+
     //trimData.length > 10 ? xScale(d.mo) + 7 : xScale(d.mo) + 50
     const bars = trimData.map((d) => {
       return {
@@ -87,7 +91,7 @@ class BarChart extends Component {
     });
 
     console.log(bars);
-    return { bars, xScale, yScale, yScaleRight, line, labels };
+    return { bars, xScale, yScale, yScaleRight, line, labels, textLabels };
   }
 
   componentDidMount() {
@@ -132,22 +136,28 @@ class BarChart extends Component {
             fill={d.fill}
           />
         ))}
-        <g>
-          {this.state.labels.map((d, i) => (
-            <text key={i} x={d.x + 2} y={d.y - 5}>
-              {d.text}
-            </text>
-          ))}
-          {this.state.labels.map((d, i) => (
-            <circle key={i} cx={d.x} cy={d.y} r={4} fill={"#e58582"} />
-          ))}
-        </g>
+        {this.state.textLabels.map((d, i) => (
+          <text key={i} x={d.x + 4} y={d.y + 8} stroke="#fff">
+            {d.text}
+          </text>
+        ))}
         <path
           d={this.state.line}
           fill={"none"}
           stroke={"#e58582"}
           strokeWidth={"3px"}
         />
+        <g>
+          {this.state.labels.map((d, i) => (
+            <circle key={i} cx={d.x} cy={d.y} r={4} fill={"#e58582"} />
+          ))}
+          {this.state.labels.map((d, i) => (
+            <text key={i} x={d.x + 2} y={d.y - 5}>
+              {d.text}
+            </text>
+          ))}
+        </g>
+
         <g
           className="axis_bottom"
           ref={this.xAxis}

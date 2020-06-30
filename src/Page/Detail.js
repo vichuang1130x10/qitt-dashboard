@@ -4,6 +4,7 @@ import { Container, Row, Col } from "react-bootstrap";
 import BarChart from "../Visualizations/BarChart";
 import DefectTable from "../Component/DefectTable";
 import { getSevenDayBoundary } from "../Utils/helperFunction";
+import Plato from "../Visualizations/Plato";
 
 class Detail extends Component {
   state = {
@@ -298,16 +299,25 @@ class Detail extends Component {
           <h4 className="section-style">Defect Symptom Analysis:</h4>
           <Row>
             <Col>
-              <h5>{`${startDate}~${endDate}`}</h5>
+              <h5 className="subtitle-text">{`${startDate}~${endDate}`}</h5>
               <div style={{ width: "100%" }}>
                 <DefectTable sortFailure={sortFailure} />
               </div>
             </Col>
             <Col>
-              <h5>LAST 30 DAYS RECORD</h5>
+              <h5 className="subtitle-text">LAST 14 DAYS DEFECT SYMPTOM</h5>
               <div style={{ width: "100%" }}>
                 <DefectTable sortFailure={sevenDaysFailure} />
               </div>
+            </Col>
+          </Row>
+
+          <Row>
+            <Col>
+              <Plato data={sortFailure} />
+            </Col>
+            <Col>
+              <Plato data={sevenDaysFailure} />
             </Col>
           </Row>
 
@@ -315,7 +325,7 @@ class Detail extends Component {
 
           <Row>
             <Col>
-              <h5>{`${startDate}~${endDate}`}</h5>
+              <h5 className="subtitle-text">{`${startDate}~${endDate}`}</h5>
               {sortFailure.length ? (
                 <div>
                   <h6>{sortFailure[0].defectName}</h6>
@@ -330,7 +340,7 @@ class Detail extends Component {
               ) : null}
             </Col>
             <Col>
-              <h5>LAST 30 DAYS RECORD</h5>
+              <h5 className="subtitle-text">LAST 14 DAYS REPAIR RECORD</h5>
               {sevenDaysFailure.length ? (
                 <div>
                   <h6>{sevenDaysFailure[0].defectName}</h6>
@@ -345,6 +355,37 @@ class Detail extends Component {
               ) : null}
             </Col>
           </Row>
+          <Row>
+            <Col>
+              {sortFailure.length ? (
+                <div>
+                  <h6>{sortFailure[0].defectName}</h6>
+                  <Plato
+                    data={this.parsingRootCause(
+                      sortFailure[0].defectName,
+                      errorAnalysis,
+                      station
+                    )}
+                  />
+                </div>
+              ) : null}
+            </Col>
+            <Col>
+              {sevenDaysFailure.length ? (
+                <div>
+                  <h6>{sevenDaysFailure[0].defectName}</h6>
+                  <Plato
+                    data={this.parsingSevenDayRootCause(
+                      sevenDaysFailure[0].defectName,
+                      errorAnalysis,
+                      station
+                    )}
+                  />
+                </div>
+              ) : null}
+            </Col>
+          </Row>
+
           <Row>
             <Col>
               {sortFailure[1] ? (
@@ -377,6 +418,36 @@ class Detail extends Component {
           </Row>
           <Row>
             <Col>
+              {sortFailure[1] ? (
+                <div>
+                  <h6>{sortFailure[1].defectName}</h6>
+                  <Plato
+                    data={this.parsingRootCause(
+                      sortFailure[1].defectName,
+                      errorAnalysis,
+                      station
+                    )}
+                  />
+                </div>
+              ) : null}
+            </Col>
+            <Col>
+              {sevenDaysFailure[1] ? (
+                <div>
+                  <h6>{sevenDaysFailure[1].defectName}</h6>
+                  <Plato
+                    data={this.parsingSevenDayRootCause(
+                      sevenDaysFailure[1].defectName,
+                      errorAnalysis,
+                      station
+                    )}
+                  />
+                </div>
+              ) : null}
+            </Col>
+          </Row>
+          <Row>
+            <Col>
               {sortFailure[2] ? (
                 <div>
                   <h6>{sortFailure[2].defectName}</h6>
@@ -396,6 +467,36 @@ class Detail extends Component {
                   <h6>{sevenDaysFailure[2].defectName}</h6>
                   <DefectTable
                     sortFailure={this.parsingSevenDayRootCause(
+                      sevenDaysFailure[2].defectName,
+                      errorAnalysis,
+                      station
+                    )}
+                  />
+                </div>
+              ) : null}
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              {sortFailure[2] ? (
+                <div>
+                  <h6>{sortFailure[2].defectName}</h6>
+                  <Plato
+                    data={this.parsingRootCause(
+                      sortFailure[2].defectName,
+                      errorAnalysis,
+                      station
+                    )}
+                  />
+                </div>
+              ) : null}
+            </Col>
+            <Col>
+              {sevenDaysFailure[2] ? (
+                <div>
+                  <h6>{sevenDaysFailure[2].defectName}</h6>
+                  <Plato
+                    data={this.parsingSevenDayRootCause(
                       sevenDaysFailure[2].defectName,
                       errorAnalysis,
                       station

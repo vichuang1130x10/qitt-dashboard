@@ -139,6 +139,13 @@ svg text {
   transform: rotate(45deg) translate(30px, -10px);
 }
 
+.plato-axis_bottom text {
+  font-family: Optima, Futura, sans-serif;
+  font-weight: bold;
+  font-size: 8px;
+  transform: rotate(45deg) translate(30px, 10px);
+}
+
 .center-text {
   text-align: center;
 }
@@ -147,4 +154,9 @@ svg text {
   background: #666;
   padding: 4px;
   color: #fff
+}
+
+.subtitle-text {
+  color: #666;
+  font-size: 18px;
 }
