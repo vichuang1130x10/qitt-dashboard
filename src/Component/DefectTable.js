@@ -17,7 +17,7 @@ export default function DefectTable({ sortFailure }) {
           <tr key={item.defectName}>
             <td>{item.defectName}</td>
             <td>{item.qty}</td>
-            <td>{item.indiv}</td>
+            <td>{item.indiv !== 0 ? item.indiv : 1}</td>
             <td>{item.accu}</td>
           </tr>
         ))}

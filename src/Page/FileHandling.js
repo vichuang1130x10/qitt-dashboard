@@ -4,7 +4,7 @@ import { Container, Row, Col } from "react-bootstrap";
 import { navigate } from "@reach/router";
 import DragCard from "../Component/DragCard";
 import { FaHourglass } from "react-icons/fa";
-import { parsingErrorList } from "../Utils/CmShopFloorParsing/ForUSI";
+import { parsingErrorList } from "../Utils/CmShopFloorParsing/RawDataParsing";
 import { mappingErrorListAndRepairList } from "../Utils/MappingErrorListAndRepariList";
 import Header from "../Component/Header";
 

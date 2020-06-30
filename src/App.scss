@@ -132,10 +132,19 @@ svg text {
   font-size: 8px;
 }
 
-// svg text {
-//   display: none;
-// }
+.axis_bottom text {
+  font-family: Optima, Futura, sans-serif;
+  font-weight: bold;
+  font-size: 8px;
+  transform: rotate(45deg) translate(30px, -10px);
+}
 
-// svg g:hover text {
-//   display: block;
-// }
+.center-text {
+  text-align: center;
+}
+
+.section-style {
+  background: #666;
+  padding: 4px;
+  color: #fff
+}

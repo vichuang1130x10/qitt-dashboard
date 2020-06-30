@@ -26,10 +26,10 @@ class DashboardTrendChart extends Component {
         yield: parseFloat(((d.Pass / d.Total) * 100).toFixed(1)),
       }));
 
-    console.log("dash trend chart start");
-    console.log(updateData);
+    // console.log("dash trend chart start");
+    // console.log(updateData);
     const x = updateData.map((d) => d.week);
-    console.log(x);
+    // console.log(x);
     const xScale = d3
       .scaleBand()
       .domain(x)

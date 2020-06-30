@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { readxlsx } from "../Utils/UtilitiesForFileHandle";
-import { parseForYieldRate } from "../Utils/CmShopFloorParsing/ForUSI";
+import { parseForYieldRate } from "../Utils/CmShopFloorParsing/RawDataParsing";
 
 export default function Dropzone({ callback, fileType, setFlag }) {
   const [filename, setFilename] = useState("");

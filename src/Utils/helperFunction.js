@@ -24,3 +24,7 @@ export function getDateOfISOWeek(w, y) {
   else ISOweekStart.setDate(simple.getDate() + 8 - simple.getDay());
   return ISOweekStart;
 }
+
+export function getSevenDayBoundary(d) {
+  return new Date(new Date(d).valueOf() + -30 * 24 * 3600 * 1000);
+}

@@ -30,7 +30,8 @@ export function parsingErrorList(errorList) {
         n[obj.Model][obj.Type].ErorrDescriptions = [
           {
             description: obj["Error_Description"],
-            reasons: [{ reason: obj.Reason, item: obj.item }],
+            reasons: [{ reason: obj.Reason, item: obj.item, date: obj.Date }],
+            date: obj.Date,
           },
         ];
       }
@@ -48,7 +49,8 @@ export function parsingErrorList(errorList) {
       ) {
         n[obj.Model][obj.Type].ErorrDescriptions.push({
           description: obj["Error_Description"],
-          reasons: [{ reason: obj.Reason, item: obj.item }],
+          reasons: [{ reason: obj.Reason, item: obj.item, date: obj.Date }],
+          date: obj.Date,
         });
       }
     }
@@ -67,6 +69,7 @@ export function parseForYieldRate(updatedJson) {
     if (proName.substring(0, 3).toUpperCase() === "BPN") {
       n.BPN.push(obj);
     } else if (
+      // to catch the key word for MB product, it should be maintained
       proName.substring(0, 2).toUpperCase() === "X1" ||
       proName.substring(0, 2).toUpperCase() === "H1" ||
       proName.substring(0, 2).toUpperCase() === "A1" ||
@@ -92,15 +95,15 @@ export function parseForYieldRate(updatedJson) {
     if (n[obj.Model] === undefined || n[obj.Model] === null) {
       n[obj.Model] = {};
       n[obj.Model]["RowData"] = [obj];
-      n[obj.Model]["SMT1"] = { Pass: 0, Fail: 0, Total: 0, data: [] };
-      n[obj.Model]["SMT2"] = { Pass: 0, Fail: 0, Total: 0, data: [] };
-      n[obj.Model]["ASM"] = { Pass: 0, Fail: 0, Total: 0, data: [] };
-      n[obj.Model]["FCT"] = { Pass: 0, Fail: 0, Total: 0, data: [] };
-      n[obj.Model]["DAOI"] = { Pass: 0, Fail: 0, Total: 0, data: [] };
-      n[obj.Model]["CPLD"] = { Pass: 0, Fail: 0, Total: 0, data: [] };
-      n[obj.Model]["VOL"] = { Pass: 0, Fail: 0, Total: 0, data: [] };
-      n[obj.Model]["CQC"] = { Pass: 0, Fail: 0, Total: 0, data: [] };
-      n[obj.Model]["ICT"] = { Pass: 0, Fail: 0, Total: 0, data: [] };
+      n[obj.Model]["SMT1"] = { Pass: 0, Fail: 0, Total: 0, data: [], mo: [] };
+      n[obj.Model]["SMT2"] = { Pass: 0, Fail: 0, Total: 0, data: [], mo: [] };
+      n[obj.Model]["ASM"] = { Pass: 0, Fail: 0, Total: 0, data: [], mo: [] };
+      n[obj.Model]["FCT"] = { Pass: 0, Fail: 0, Total: 0, data: [], mo: [] };
+      n[obj.Model]["DAOI"] = { Pass: 0, Fail: 0, Total: 0, data: [], mo: [] };
+      n[obj.Model]["CPLD"] = { Pass: 0, Fail: 0, Total: 0, data: [], mo: [] };
+      n[obj.Model]["VOL"] = { Pass: 0, Fail: 0, Total: 0, data: [], mo: [] };
+      n[obj.Model]["CQC"] = { Pass: 0, Fail: 0, Total: 0, data: [], mo: [] };
+      n[obj.Model]["ICT"] = { Pass: 0, Fail: 0, Total: 0, data: [], mo: [] };
 
       if (
         obj.Type === "SMT1" ||
@@ -116,8 +119,9 @@ export function parseForYieldRate(updatedJson) {
         n[obj.Model][obj.Type].Pass += obj.Pass;
         n[obj.Model][obj.Type].Fail += obj.Fail;
         n[obj.Model][obj.Type].Total += obj.Total;
-        const { Date, Pass, Fail, Total } = obj;
+        const { Date, Pass, Fail, Total, MO, Start_date } = obj;
         n[obj.Model][obj.Type].data = [{ Date, Pass, Fail, Total }];
+        n[obj.Model][obj.Type].mo = [{ MO, Pass, Fail, Total, Start_date }];
       }
     } else {
       n[obj.Model]["RowData"].push(obj);
@@ -135,7 +139,7 @@ export function parseForYieldRate(updatedJson) {
         n[obj.Model][obj.Type].Pass += obj.Pass;
         n[obj.Model][obj.Type].Fail += obj.Fail;
         n[obj.Model][obj.Type].Total += obj.Total;
-        const { Date, Pass, Fail, Total } = obj;
+        const { Date, Pass, Fail, Total, MO, Start_date } = obj;
         const sameDateObje = n[obj.Model][obj.Type].data.find(
           (elem) => elem.Date.toString() === Date.toString()
         );
@@ -145,6 +149,17 @@ export function parseForYieldRate(updatedJson) {
           sameDateObje.Total += Total;
         } else {
           n[obj.Model][obj.Type].data.push({ Date, Pass, Fail, Total });
+        }
+        const sameMoObj = n[obj.Model][obj.Type].mo.find(
+          (elem) => elem.MO === MO
+        );
+
+        if (sameMoObj) {
+          sameMoObj.Pass += Pass;
+          sameMoObj.Fail += Fail;
+          sameMoObj.Total += Total;
+        } else {
+          n[obj.Model][obj.Type].mo.push({ MO, Pass, Fail, Total, Start_date });
         }
       }
     }
@@ -202,6 +217,7 @@ function transformToArray(obj) {
   return o;
 }
 
+// generate yield rate/ output data by week
 const calculateData = (arr, type) => {
   const data = arr
     .filter((obj) => obj.Type === type)
@@ -210,7 +226,7 @@ const calculateData = (arr, type) => {
       Pass: obj.Pass,
       Total: obj.Total,
     }));
-  // Week: `WK${getWeek(obj.Date)}`,
+
   const finalResult = {};
   data.forEach((obj) => {
     if (finalResult[obj.Week] === undefined || finalResult[obj.Week] === null) {

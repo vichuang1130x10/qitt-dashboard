@@ -15,7 +15,7 @@ class DashboardPieChart extends Component {
     if (!data) return {};
 
     const updateData = Object.values(data);
-    console.log(updateData);
+   
     const total = updateData.reduce((acc, ele) => acc + ele, 0);
     const labelData = [];
     updateData.forEach((data, i) => {
@@ -39,11 +39,6 @@ class DashboardPieChart extends Component {
     const arcGenerator = d3.arc();
     const pieGenerator = d3.pie();
 
-    const tempAnnotations = d3
-      .arc()
-      .outerRadius(height / 3)
-      .innerRadius(height / 3 - 80);
-
     const pie = pieGenerator(updateData);
     const slices = pie.map((d, i) => {
       const path = arcGenerator({
@@ -54,18 +49,6 @@ class DashboardPieChart extends Component {
       });
       return { path, fill: colors(i) };
     });
-
-    // const labels = pie.map((d, i) => ({
-    //   startAngle: d.startAngle,
-    //   endAngle: d.endAngle,
-    //   innerRadius: 50,
-    //   outerRadius: height / 3,
-    // }));
-
-    // console.log("labels", labels);
-
-    console.log(slices);
-
     return { slices, labelData };
   }
 
@@ -76,15 +59,6 @@ class DashboardPieChart extends Component {
           {this.state.slices.map((d, i) => (
             <path key={i} d={d.path} fill={d.fill} />
           ))}
-
-          {/* {this.state.tempAnnotations.map((d, i) => (
-            <g key={i}>
-              <circle r={d.r} fill="none" stroke="#999" />
-              <text y={-d.r - 2} textAnchor="middle">
-                {d.temp}℉
-              </text>
-            </g>
-          ))} */}
         </g>
         <text x="50" y="50" style={{ fontSize: "11px" }}>
           {this.state.labelData[0]}
