@@ -71,7 +71,7 @@ class Plato extends Component {
         width:
           updateData.length > 5
             ? width / updateData.length - 25
-            : width / updateData.length - 50,
+            : width / updateData.length - 80,
         fill: "#319966",
         // text: `${d.yield}%`,
       };
