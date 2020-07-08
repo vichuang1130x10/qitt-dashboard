@@ -8,11 +8,13 @@ import {
   ModelName,
   Input,
 } from "../Component/HeaderComponent";
+import Button from "../Component/Button";
 
 import { Link } from "@reach/router";
 import { Container, Row } from "react-bootstrap";
 import styled from "styled-components";
 import * as d3 from "d3";
+import { navigate } from "@reach/router";
 
 const InputField = styled.div`
   margin: 20px;
@@ -74,6 +76,29 @@ class DefectMapping extends Component {
         textFile: data,
       })
     );
+  };
+
+  generateDefectMapping = () => {
+    const {
+      fileUrl,
+      textFile,
+      errorAnalysis,
+      boardLength,
+      boardWidth,
+      xOffset,
+      yOffset,
+    } = this.state;
+    navigate(`/generat-mapping`, {
+      state: {
+        fileUrl,
+        textFile,
+        errorAnalysis,
+        boardLength,
+        boardWidth,
+        xOffset,
+        yOffset,
+      },
+    });
   };
 
   render() {
@@ -151,11 +176,15 @@ class DefectMapping extends Component {
                 </div>
                 <div>
                   <input type="file" onChange={this.handleCSV} />
-                  <pre>
-                    <code>{JSON.stringify(textFile, null, 4)}</code>
-                  </pre>
                 </div>
               </div>
+            </div>
+          </Row>
+          <Row>
+            <div style={{ marginTop: "20px" }}>
+              <Button onClick={() => this.generateDefectMapping()}>
+                Generate Mapping
+              </Button>
             </div>
           </Row>
         </Container>

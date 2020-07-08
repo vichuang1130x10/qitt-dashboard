@@ -161,3 +161,21 @@ svg text {
   color: #666;
   font-size: 18px;
 }
+
+.img-overlay-wrap {
+  position: relative;
+  display: inline-block;
+
+}
+
+.img-overlay-wrap img {
+  display: block;
+  width: 900px;
+  height: 900px;
+}
+
+.img-overlay-wrap svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+}

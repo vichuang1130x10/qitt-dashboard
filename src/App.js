@@ -7,6 +7,7 @@ import ResultPresent from "./Page/ResultPresent";
 import Detail from "./Page/Detail";
 import Dashboard from "./Page/Dashboard";
 import DefectMapping from "./Page/DefectMapping";
+import GenerateMapping from "./Page/GenerateMapping";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Detail path="/detail" />
         <Dashboard path="/dashboard" />
         <DefectMapping path="/defect-mapping" />
+        <GenerateMapping path="/generat-mapping" />
       </Router>
     </div>
   );
