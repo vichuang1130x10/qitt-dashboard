@@ -137,7 +137,7 @@ class BarChart extends Component {
           />
         ))}
         {this.state.textLabels.map((d, i) => (
-          <text key={i} x={d.x + 4} y={d.y + 8} stroke="#fff">
+          <text key={i} x={d.x + 4} y={d.y + 8} stroke="#fff" fontSize="8px">
             {d.text}
           </text>
         ))}
@@ -152,7 +152,7 @@ class BarChart extends Component {
             <circle key={i} cx={d.x} cy={d.y} r={4} fill={"#e58582"} />
           ))}
           {this.state.labels.map((d, i) => (
-            <text key={i} x={d.x + 2} y={d.y - 5}>
+            <text key={i} x={d.x + 2} y={d.y - 5} fontSize="8px">
               {d.text}
             </text>
           ))}

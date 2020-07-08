@@ -21,6 +21,16 @@ const InputField = styled.div`
   margin: 20px;
 `;
 
+const fontSize = (qty) => {
+  if (qty > 10) {
+    return 20;
+  } else if (qty > 5) {
+    return 12;
+  } else {
+    return 4;
+  }
+};
+
 class DefectMapping extends Component {
   state = {
     startDate: "",
@@ -34,6 +44,7 @@ class DefectMapping extends Component {
     textFile: {},
     fileUrl: "",
     drawingData: [],
+    labelData: [],
   };
   componentDidMount() {
     const {
@@ -133,11 +144,20 @@ class DefectMapping extends Component {
     const drawingData = data.map((d) => ({
       cx: xScale(d.x),
       cy: yScale(d.y),
-      r: d.qty,
+      r: d.qty * 1.5,
+    }));
+
+    const labelData = data.map((d) => ({
+      x: xScale(d.x),
+      y: yScale(d.y),
+      stroke: "#23AFF7",
+      text: `${d.ref} * ${d.qty}`,
+      size: `${fontSize(d.qty)}px`,
     }));
 
     this.setState({
       drawingData,
+      labelData,
     });
   };
 
@@ -221,11 +241,31 @@ class DefectMapping extends Component {
           <Row>
             <div style={{ marginTop: "20px" }}>
               <div className="img-overlay-wrap">
-                <img src={fileUrl} alt="loading" />
+                <img src={fileUrl} alt="loading" width="900" height="900" />
                 <svg width="900" height="900">
                   {this.state.drawingData.map((d, i) => (
-                    <circle key={i} cx={d.cx} cy={d.cy} r={d.r} />
+                    <circle
+                      key={i}
+                      cx={d.cx}
+                      cy={d.cy}
+                      r={d.r}
+                      fill="red"
+                      opacity="0.5"
+                    />
                   ))}
+                  <g>
+                    {this.state.labelData.map((d, i) => (
+                      <text
+                        key={i}
+                        x={d.x}
+                        y={d.y}
+                        stroke={d.stroke}
+                        fontSize={d.size}
+                      >
+                        {d.text}
+                      </text>
+                    ))}
+                  </g>
                 </svg>
               </div>
             </div>

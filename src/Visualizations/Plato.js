@@ -141,7 +141,7 @@ class Plato extends Component {
         ))}
         <g>
           {this.state.labels.map((d, i) => (
-            <text key={i} x={d.x + 2} y={d.y - 5}>
+            <text key={i} x={d.x + 2} y={d.y - 5} fontSize="8px">
               {d.text}
             </text>
           ))}
