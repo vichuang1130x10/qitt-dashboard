@@ -6,6 +6,7 @@ import FileHandling from "./Page/FileHandling";
 import ResultPresent from "./Page/ResultPresent";
 import Detail from "./Page/Detail";
 import Dashboard from "./Page/Dashboard";
+import DefectMapping from "./Page/DefectMapping";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <ResultPresent path="/result" />
         <Detail path="/detail" />
         <Dashboard path="/dashboard" />
+        <DefectMapping path="/defect-mapping" />
       </Router>
     </div>
   );

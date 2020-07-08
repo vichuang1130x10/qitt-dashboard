@@ -5,6 +5,8 @@ import BarChart from "../Visualizations/BarChart";
 import DefectTable from "../Component/DefectTable";
 import { getSevenDayBoundary } from "../Utils/helperFunction";
 import Plato from "../Visualizations/Plato";
+import Button from "../Component/Button";
+import { navigate } from "@reach/router";
 
 class Detail extends Component {
   state = {
@@ -251,6 +253,13 @@ class Detail extends Component {
     return rootCauseResult;
   };
 
+  gotoDefectMapping = () => {
+    const { modelName, startDate, endDate, errorAnalysis } = this.state;
+    navigate(`/defect-mapping`, {
+      state: { modelName, startDate, endDate, errorAnalysis },
+    });
+  };
+
   render() {
     const {
       tableData,
@@ -294,6 +303,11 @@ class Detail extends Component {
               </select>
             </label>
             <BarChart data={trendData} />
+          </Row>
+          <Row style={{ margin: "20px" }}>
+            <Button onClick={() => this.gotoDefectMapping()}>
+              Defect Mapping Page
+            </Button>
           </Row>
           <br />
           <h4 className="section-style">Defect Symptom Analysis:</h4>
@@ -518,30 +532,3 @@ class Detail extends Component {
 }
 
 export default Detail;
-
-//    <Table
-// striped
-// bordered
-// hover
-// size="sm"
-// style={{ fontSize: "16px" }}
-// >
-// <thead>
-//   <tr>
-//     <th>Defect Item </th>
-//     <th>Q'ty(pcs)</th>
-//     <th>Individual%</th>
-//     <th>Comulated%</th>
-//   </tr>
-// </thead>
-// <tbody>
-//   {sortFailure.map((item) => (
-//     <tr key={item.defectName}>
-//       <td>{item.defectName}</td>
-//       <td>{item.qty}</td>
-//       <td>{item.indiv}</td>
-//       <td>{item.accu}</td>
-//     </tr>
-//   ))}
-// </tbody>
-// </Table>

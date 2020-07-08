@@ -33,6 +33,15 @@ export default function Dropzone({ callback, fileType, setFlag }) {
               } else {
                 const updatedJson = { YieldRate: retJson[key] };
 
+                // here to the vendor data and update the type content by each different vendor
+                // updateJson.YieldRate.forEach(obj =>
+                // switch (obj.vendor){
+                //  case 'USI':
+                //  case 'OSE':
+                //}
+                //
+                // )
+
                 const n = parseForYieldRate(updatedJson);
                 console.log(n);
 
