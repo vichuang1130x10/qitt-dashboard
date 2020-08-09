@@ -1,80 +1,16 @@
-import { getWeek } from "../helperFunction";
-
-// parsing errorlist json to specfic format for each station failure symptom
-export function parsingErrorList(errorList) {
-  let n = {};
-  errorList.forEach((obj) => {
-    if (n[obj.Model] === undefined || n[obj.Model] === null) {
-      n[obj.Model] = {};
-      n[obj.Model]["SMT1"] = { ErorrDescriptions: [] };
-      n[obj.Model]["SMT2"] = { ErorrDescriptions: [] };
-      n[obj.Model]["ASM"] = { ErorrDescriptions: [] };
-      n[obj.Model]["FCT"] = { ErorrDescriptions: [] };
-      n[obj.Model]["DAOI"] = { ErorrDescriptions: [] };
-      n[obj.Model]["CPLD"] = { ErorrDescriptions: [] };
-      n[obj.Model]["VOL"] = { ErorrDescriptions: [] };
-      n[obj.Model]["CQC"] = { ErorrDescriptions: [] };
-      n[obj.Model]["ICT"] = { ErorrDescriptions: [] };
-
-      if (
-        obj.Type === "SMT1" ||
-        obj.Type === "SMT2" ||
-        obj.Type === "ASM" ||
-        obj.Type === "FCT" ||
-        obj.Type === "DAOI" ||
-        obj.Type === "CPLD" ||
-        obj.Type === "VOL" ||
-        obj.Type === "CQC" ||
-        obj.Type === "ICT"
-      ) {
-        n[obj.Model][obj.Type].ErorrDescriptions = [
-          {
-            description: obj["Error_Description"],
-            reasons: [{ reason: obj.Reason, item: obj.item, date: obj.Date }],
-            date: obj.Date,
-          },
-        ];
-      }
-    } else {
-      if (
-        obj.Type === "SMT1" ||
-        obj.Type === "SMT2" ||
-        obj.Type === "ASM" ||
-        obj.Type === "FCT" ||
-        obj.Type === "DAOI" ||
-        obj.Type === "CPLD" ||
-        obj.Type === "VOL" ||
-        obj.Type === "CQC" ||
-        obj.Type === "ICT"
-      ) {
-        n[obj.Model][obj.Type].ErorrDescriptions.push({
-          description: obj["Error_Description"],
-          reasons: [{ reason: obj.Reason, item: obj.item, date: obj.Date }],
-          date: obj.Date,
-        });
-      }
-    }
-  });
-
-  return n;
-}
+import { getWeek, MBKEYWORD, BPNKEYWORD } from "../helperFunction";
 
 // parsing yieldRate json to specfic format for each station failure symptom
 export function parseForYieldRate(updatedJson) {
   let n = { startDate: null, endDate: null, MB: [], BPN: [], Other: [] };
 
   updatedJson.YieldRate.forEach((obj) => {
-    // seperate raw data for MB, BPN ,and Other groups
     const proName = obj.Model.split("(")[1] || "";
-    if (proName.substring(0, 3).toUpperCase() === "BPN") {
+    if (BPNKEYWORD.includes(proName.substring(0, 3).toUpperCase())) {
+      // seperate raw data for MB, BPN ,and Other groups
       n.BPN.push(obj);
-    } else if (
+    } else if (MBKEYWORD.includes(proName.substring(0, 3).toUpperCase())) {
       // to catch the key word for MB product, it should be maintained
-      proName.substring(0, 2).toUpperCase() === "X1" ||
-      proName.substring(0, 2).toUpperCase() === "H1" ||
-      proName.substring(0, 2).toUpperCase() === "A1" ||
-      proName.substring(0, 2).toUpperCase() === "A2"
-    ) {
       n.MB.push(obj);
     } else {
       n.Other.push(obj);
@@ -320,4 +256,63 @@ function generateFTY(obj) {
 
   console.log("generateFTY", obj);
   return obj;
+}
+
+// parsing errorlist json to specfic format for each station failure symptom
+export function parsingErrorList(errorList) {
+  let n = {};
+  errorList.forEach((obj) => {
+    if (n[obj.Model] === undefined || n[obj.Model] === null) {
+      n[obj.Model] = {};
+      n[obj.Model]["SMT1"] = { ErorrDescriptions: [] };
+      n[obj.Model]["SMT2"] = { ErorrDescriptions: [] };
+      n[obj.Model]["ASM"] = { ErorrDescriptions: [] };
+      n[obj.Model]["FCT"] = { ErorrDescriptions: [] };
+      n[obj.Model]["DAOI"] = { ErorrDescriptions: [] };
+      n[obj.Model]["CPLD"] = { ErorrDescriptions: [] };
+      n[obj.Model]["VOL"] = { ErorrDescriptions: [] };
+      n[obj.Model]["CQC"] = { ErorrDescriptions: [] };
+      n[obj.Model]["ICT"] = { ErorrDescriptions: [] };
+
+      if (
+        obj.Type === "SMT1" ||
+        obj.Type === "SMT2" ||
+        obj.Type === "ASM" ||
+        obj.Type === "FCT" ||
+        obj.Type === "DAOI" ||
+        obj.Type === "CPLD" ||
+        obj.Type === "VOL" ||
+        obj.Type === "CQC" ||
+        obj.Type === "ICT"
+      ) {
+        n[obj.Model][obj.Type].ErorrDescriptions = [
+          {
+            description: obj["Error_Description"],
+            reasons: [{ reason: obj.Reason, item: obj.item, date: obj.Date }],
+            date: obj.Date,
+          },
+        ];
+      }
+    } else {
+      if (
+        obj.Type === "SMT1" ||
+        obj.Type === "SMT2" ||
+        obj.Type === "ASM" ||
+        obj.Type === "FCT" ||
+        obj.Type === "DAOI" ||
+        obj.Type === "CPLD" ||
+        obj.Type === "VOL" ||
+        obj.Type === "CQC" ||
+        obj.Type === "ICT"
+      ) {
+        n[obj.Model][obj.Type].ErorrDescriptions.push({
+          description: obj["Error_Description"],
+          reasons: [{ reason: obj.Reason, item: obj.item, date: obj.Date }],
+          date: obj.Date,
+        });
+      }
+    }
+  });
+
+  return n;
 }
